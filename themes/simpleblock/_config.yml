@@ -1,0 +1,36 @@
+## Services
+google_analytics: UA-63884172-1
+
+## Meta
+rss: /atom.xml
+favicon: /favicon.png
+icon: /favicon.png
+source_url:
+license:
+  name: 'CC BY-NC-SA 3.0'
+  url: 'http://creativecommons.org/licenses/by-nc-sa/3.0/cn'
+
+## Menus
+menus:
+  'Home': /
+
+right_menus:
+  'Github': 'https://github.com/Uyiim'
+  'RSS': /atom.xml
+
+## Banners && Widgets
+banners:
+  markdown: |
+      成为资深的linux运维工程师，没事也能写写小软件，或是贡献开源
+
+widgets:
+  -
+    markdown: |
+        暂无内容
+
+  -
+    tags: true
+
+  -
+    archives: true
+

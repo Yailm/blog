@@ -1,0 +1,437 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="alternate" type="application/rss+xml" title="Fiotose" href="/atom.xml"><link rel="stylesheet" href="/styles.css"><title>Fiotose</title></head><body><div class="container"><div class="columns page-header"><h1>Fiotose</h1></div><div class="columns"><div class="navigation clearfix"><nav class="left"><a href="/" class="favicon"><img alt="Fiotose" src="/favicon.png"></a><a href="/">Home</a></nav><nav class="right"><a href="https://github.com/Fiotose">Github</a><a href="/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>成为资深的linux运维工程师，没事也能写写小软件，或是贡献开源</p>
+</div><article><header><h2><a href="/2015/10/11/Hello-World/">Hello World!</a></h2></header><div class="article-meta clearfix"><time class="left">2015-10-11</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/tags/Life/">Life</a></li></ul></div><div class="markdown-body"><p>荒颓了较长的一段时间，决定跟自己好好谈一下。并不是能改变自己的情绪或是一些看法，目下无尘的感觉不算太差，只是比较容易弄坏自己</p>
+<p>已经很长的一段，我的时间记录不准，自己也懒得去好好地校正，同时也有包括我的日记。上次满心是话地打开日记本，到笔尖上还是顿生厌恶感，草草写了三两行。而且还有混乱的作息，最近习惯起了睡在傍晚，大概3点左右，然后67点再爬起来，晚上又是1点后睡，却迟迟睡不着。呵，我早就发现自己已经是别人眼里的奇葩了</p>
+<p>其实改变不改变对现在的自己意义也不大，是觉得放到以后会被埋怨，这段日子肯定会有一天会结束，或不小心被终结。</p>
+<p>日记真的是关键，若能好好写的话也许会有很大的改善。所以封存了旧的日记本，换成一本全白的本子，不想受线条控制的，随心所欲地记录好生活</p>
+<p>利索起来</p>
+<p>print “Hello World\n”;</p>
+</div></article><article><header><h2><a href="/2015/09/22/面试了一次新生/">面试了一次新生</a></h2></header><div class="article-meta clearfix"><time class="left">2015-09-22</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/tags/Life/">Life</a></li></ul></div><div class="markdown-body"><p>感觉自己已经和俱乐部、实验室断了好久的联系，见面竟然还是打招呼的。</p>
+<p>这次微软俱乐部的纳新完全没去做任何事，只是冲着面试新生的体验去的。这样讲起来还像非常地自私，就连招我去发传单的电话都懒得接，不，不对，我一直是肯定自己的。</p>
+<p>在门口晃悠了一会，旧成员都感觉有点生，糊了脸皮终于是进去了。</p>
+<p>看过他们忙活过的宣讲会，感觉就是乱七八糟，真的，看不是很下去。正经的东西不多，就那几次的聚餐特别强调，对，还有生日会。</p>
+<p>然后就随着一队人到了新教室，准备面试。门外，一个新生问了我问题，估计我讲的比他预期的多吧，没说完。。。</p>
+<p>然而面试过程中，我们的表现估计更加比不过他们。就只让他们自我介绍下，提问几乎没有，反正我从头到尾也只问了一句。每个人下台前都要整个场尴尬几秒钟。当然我并不想做一些活，其他面试的同学也就围绕几个问题，”软件工程是你的第一个志愿吗？”，“如果你可以转专业，你会转吗？”，“学过c吗？”等等的。只是重复太多了，听着无聊。。</p>
+<p>这次新生几乎都是电脑小白，只有两个有点基础，其中那个拿过一等奖比我去年还好，倒是每个都充满期待的样子，让人饶有兴趣。想想去年的热情，不然也进不来。</p>
+<p>我也不是过来做正式的面试官的，给我的纸上还是没给新生做任何批注，就试着边听他们的介绍对话，一边把心里想的写了出来，也是一份不错的成品。</p>
+<p>面试结束，和其他面试的同学坐在了一起，难免一些话题落在我的头上。稍微应付过去后，我一直抄写着白纸上的一些字，避免了谈话。作为在场一些伙伴共同项目的背叛者，虽然他们的任务量大了，但估计还在为能一起做项目的新鲜感高兴吧，最后就这样散了。</p>
+<p>现在就不知道当初为什么过去了，明明有些”声名在外”了，还是得肯定自己吧。</p>
+</div></article><article><header><h2><a href="/2015/09/18/在archlinux下搭建lnmp环境/">在archlinux下搭建lnmp环境</a></h2></header><div class="article-meta clearfix"><time class="left">2015-09-18</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/tags/Archlinux/">Archlinux</a></li><li><a href="/tags/Webserver/">Webserver</a></li></ul></div><div class="markdown-body"><p>本文主要根据<a href="http://zyan.cc" target="_blank" rel="external">张宴的BLOG</a>，我在centos虚拟机搭建成功后，想想也在archlinux练练，把搭建的笔记整理了一下。</p>
+<p>这里lnmp是linux+nginx+mariadb+PHP，目前截止使用的软件都是最新的，archlinux也是保持滚动到最新</p>
+<p>1.从源里直接安装一些软件</p>
+<pre><code>$ sudo <span class="operator">-s</span>
+<span class="comment"># pacman -S --noconfirm gcc autoconf libjpeg libpng freetype libxml2 zlib glibc glib2 bzip2 ncurses curl e2fsprogs krb5 libidn openssl pcre mhash openldap nss_ldap libmcrypt mariadb</span>
+</code></pre><p>这里<code>mariadb</code>数据库直接用源里的了</p>
+<pre><code><span class="preprocessor"># mkdir -p /data0/soft</span>
+<span class="preprocessor"># cd /data0/soft</span>
+<span class="preprocessor"># wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz</span>
+<span class="preprocessor"># wget http://nginx.org/download/nginx-1.8.0.tar.gz</span>
+<span class="preprocessor"># wget "http://downloads.sourceforge.net/mcrypt/mcrypt-2.6.8.tar.gz?modtime=1194463373&amp;big_mirror=0"</span>
+<span class="preprocessor"># wget http://cn2.php.net/get/php-5.6.13.tar.gz/from/this/mirror</span>
+<span class="preprocessor"># wget http://pecl.php.net/get/memcache-2.2.7.tgz</span>
+</code></pre><p>2.接下来就开始编译PHP的支持库</p>
+<pre><code><span class="preprocessor"># tar zxvf libiconv[TAB]</span>
+<span class="preprocessor"># cd libiconv[TAB]</span>
+<span class="preprocessor"># ./configure --prefix=/usr/local</span>
+<span class="preprocessor"># make</span>
+<span class="preprocessor"># make install</span>
+<span class="preprocessor"># cd ..</span>
+
+<span class="preprocessor"># tar zxvf mcrypt[TAB]</span>
+<span class="preprocessor"># cd mcrypt[TAB]</span>
+<span class="preprocessor"># /sbin/ldconfig</span>
+<span class="preprocessor"># ./configure</span>
+<span class="preprocessor"># make</span>
+<span class="preprocessor"># make install</span>
+<span class="preprocessor"># cd ..</span>
+</code></pre><p><code>mcrypt</code>的编译有问题的，看下<code>/usr/lib/</code>中有没有libmhash和libmcrypt的库文件。</p>
+<p>3.配置mariadb</p>
+<p>创建mariadb的用户和数据库目录</p>
+<pre><code><span class="preprocessor"># groupadd mysql</span>
+<span class="preprocessor"># useradd -g mysql mysql</span>
+<span class="preprocessor"># mkdir -p /data0/data/mysql</span>
+<span class="preprocessor"># mkdir -p /data0/logs/mysql</span>
+<span class="preprocessor"># mkdir /data0/etc</span>
+</code></pre><p>创建数据表和配置文件</p>
+<pre><code><span class="preprocessor"># mysql_install_db --user=mysql --basedir=/usr --datadir=/data0/data/mysql</span>
+<span class="preprocessor"># vim /data0/etc/my.cnf</span>
+</code></pre><p>my.cnf配置文件</p>
+<pre><code>[client]
+<span class="variable">character-set-server=</span>utf8
+<span class="variable">port=</span><span class="number">3306</span>
+<span class="variable">socket=</span>/run/mysqld/mysqld.sock
+
+[mysqld]
+<span class="variable">character-set-server=</span>utf8
+<span class="variable">user=</span>mysql
+<span class="variable">port=</span><span class="number">3306</span>
+<span class="variable">socket=</span>/run/mysqld/mysqld.sock
+<span class="variable">basedir=</span>/usr
+<span class="variable">datadir=</span>/data0/data/mysql
+<span class="variable">log-error=</span>/data0/logs/mysql/err.log
+<span class="variable">pid-file=</span>/data0/data/mysql/mysql.pid
+<span class="variable">open_files_limit=</span><span class="number">8192</span>
+<span class="variable">back_log=</span><span class="number">600</span>
+<span class="variable">max_connections=</span><span class="number">5000</span>
+<span class="variable">max_connect_errors=</span><span class="number">6000</span>
+<span class="variable">table-cache=</span><span class="number">4096</span>
+<span class="variable">external-locking=</span>FALSE
+<span class="variable">max_allowed_packet=</span><span class="number">32</span>M
+<span class="variable">sort_buffer_size=</span><span class="number">1</span>M
+<span class="variable">join_buffer_size=</span><span class="number">1</span>M
+<span class="variable">thread_cache_size=</span><span class="number">256</span>
+<span class="comment">#thread_concurrency=8</span>
+<span class="variable">query_cache_size=</span><span class="number">512</span>M
+<span class="variable">query_cache_limit=</span><span class="number">2</span>M
+<span class="variable">query_cache_min_res_unit=</span><span class="number">2</span>K
+<span class="variable">default_storage_engine=</span>MyISAM
+<span class="variable">thread_stack=</span><span class="number">192</span>k
+<span class="variable">transaction_isolation=</span>READ-COMMITTED
+<span class="variable">tmp_table_size=</span><span class="number">246</span>M
+<span class="variable">max_heap_table_size=</span><span class="number">246</span>M
+<span class="variable">long_query_time=</span><span class="number">3</span>
+log_slave_updates
+<span class="variable">log-bin=</span>/data0/logs/mysql/binlog
+<span class="variable">binlog_cache_size=</span><span class="number">4</span>M
+<span class="variable">binlog_format=</span>MIXED
+<span class="comment">#log</span>
+<span class="comment">#log_warngins</span>
+<span class="variable">max_binlog_size=</span><span class="number">1</span>G
+<span class="variable">relay-log-index=</span>/data0/logs/mysql/relaylog
+<span class="variable">relay-log-info-file=</span>/data0/logs/mysql/relaylog
+<span class="variable">relay-log=</span>/data0/log/mysqlrelaylog
+<span class="variable">expire_logs_days=</span><span class="number">30</span>
+<span class="variable">key_buffer_size=</span><span class="number">256</span>M
+<span class="variable">read_buffer_size=</span><span class="number">1</span>M
+<span class="variable">read_rnd_buffer_size=</span><span class="number">16</span>M
+<span class="variable">bulk_insert_buffer_size=</span><span class="number">64</span>M
+<span class="variable">myisam_sort_buffer_size=</span><span class="number">128</span>M
+<span class="variable">myisam_max_sort_file_size=</span><span class="number">10</span>G
+<span class="variable">myisam_repair_threads=</span><span class="number">1</span>
+myisam_recover
+
+<span class="variable">interactive_timeout=</span><span class="number">120</span>
+<span class="variable">wait_timeout=</span><span class="number">120</span>
+
+skip-name-resolve
+<span class="comment">#master-connect-retry=10</span>
+<span class="variable">slave-skip-errors=</span><span class="number">1032</span>,<span class="number">1062</span>,<span class="number">126</span>,<span class="number">1114</span>,<span class="number">1146</span>,<span class="number">1048</span>,<span class="number">1396</span>
+
+<span class="comment">#master-host=192.168.1.2</span>
+<span class="comment">#master-user=username</span>
+<span class="comment">#master-password=password</span>
+<span class="comment">#master-port=3306</span>
+
+<span class="variable">server-id=</span><span class="number">1</span>
+
+<span class="variable">innodb_additional_mem_pool_size=</span><span class="number">16</span>M
+<span class="variable">innodb_buffer_pool_size=</span><span class="number">512</span>M
+<span class="variable">innodb_data_file_path=</span>ibdata1:<span class="number">512</span>M:autoextend
+<span class="variable">innodb_file_io_threads=</span><span class="number">4</span>
+<span class="variable">innodb_thread_concurrency=</span><span class="number">8</span>
+<span class="variable">innodb_flush_log_at_trx_commit=</span><span class="number">2</span>
+<span class="variable">innodb_log_buffer_size=</span><span class="number">16</span>M
+<span class="variable">innodb_log_file_size=</span><span class="number">128</span>M
+<span class="variable">innodb_log_files_in_group=</span><span class="number">3</span>
+<span class="variable">innodb_max_dirty_pages_pct=</span><span class="number">90</span>
+<span class="variable">innodb_lock_wait_timeout=</span><span class="number">120</span>
+<span class="variable">innodb_file_per_table=</span><span class="number">0</span>
+
+<span class="comment">#log-slow-queries=/data0/logs/mysql/slow.log</span>
+<span class="comment">#long_query_time=10</span>
+
+[mysqldump]
+quick
+<span class="variable">max_allowed_packet=</span><span class="number">32</span>M
+</code></pre><p>创建管理mariadb数据库的shell脚本</p>
+<pre><code><span class="comment"># mkdir -p /data0/bin</span>
+<span class="comment"># vim /data0/bin/mysql</span>
+
+<span class="shebang">#!/bin/sh</span>
+mysql_username=<span class="string">"admin"</span>
+mysql_password=<span class="string">"nimda"</span>          //账号等下再添加
+mysql_port=<span class="number">3306</span>
+
+<span class="function"><span class="title">function_start_mysql</span></span>()
+{
+    <span class="built_in">printf</span> <span class="string">"Starting MySQL..."</span>
+    /bin/sh /usr/bin/mysqld_safe --defaults-file=/data0/etc/my.cnf <span class="number">2</span>&gt;&amp;<span class="number">1</span> &gt;/dev/null &amp;
+    <span class="built_in">printf</span> <span class="string">"Done!\n"</span>
+}
+
+<span class="function"><span class="title">function_stop_mysql</span></span>()
+{
+    <span class="built_in">printf</span> <span class="string">"Stoping MySQL..."</span>
+    /usr/bin/mysqladmin -u <span class="variable">${mysql_username}</span> -p<span class="variable">${mysql_password}</span> -S /run/mysqld/mysqld.sock shutdown
+    <span class="built_in">printf</span> <span class="string">"Done!\n"</span>
+}
+
+<span class="function"><span class="title">function_restart_mysql</span></span>()
+{
+    <span class="built_in">printf</span> <span class="string">"Restarting MySQL..."</span>
+    <span class="keyword">function</span>_stop_mysql
+    sleep <span class="number">5</span>
+    <span class="keyword">function</span>_start_mysql
+    <span class="built_in">printf</span> <span class="string">"Done!\n"</span>
+}
+
+<span class="function"><span class="title">function_kill_mysql</span></span>()
+{
+    <span class="built_in">printf</span> <span class="string">"Killing MySQL..."</span>
+    <span class="built_in">kill</span> -<span class="number">9</span> $(ps -ef | grep <span class="string">'bin/mysqld'</span> | grep <span class="variable">${mysql_port}</span> | awk <span class="string">'{printf $3 " " $2}'</span>)
+    <span class="built_in">printf</span> <span class="string">"Done!\n"</span>
+}
+
+<span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]; <span class="keyword">then</span>
+    <span class="keyword">function</span>_start_mysql
+<span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"stop"</span> ]; <span class="keyword">then</span>
+    <span class="keyword">function</span>_stop_mysql
+<span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"restart"</span> ]; <span class="keyword">then</span>
+    <span class="keyword">function</span>_start_mysql
+<span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"kill"</span> ]; <span class="keyword">then</span>
+    <span class="keyword">function</span>_<span class="built_in">kill</span>_mysql
+<span class="keyword">else</span>
+    <span class="built_in">printf</span> <span class="string">" Usage: /data0/bin/mysql {start|stop|restart|kill}\n"</span>
+<span class="keyword">fi</span>
+</code></pre><p>设置好权限</p>
+<pre><code><span class="preprocessor"># chmod +x /data0/bin/mysql</span>
+<span class="preprocessor"># chown -R mysql:mysql /data0/data/mysql</span>
+</code></pre><p>启动，确认没什么错误</p>
+<pre><code><span class="preprocessor"># /data0/bin/mysql start</span>
+<span class="preprocessor"># cat /data0/logs/mysql/err.log</span>
+</code></pre><p>连接数据库，提示password直接回车</p>
+<pre><code><span class="preprocessor"># mysql -u root -p</span>
+</code></pre><p>输入SQL语句，创建刚才脚本中设置的admin用户</p>
+<pre><code><span class="subst">&gt;</span> GRANT <span class="literal">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="subst">*</span><span class="built_in">.</span><span class="subst">*</span> <span class="keyword">TO</span> <span class="string">'admin'</span>@<span class="string">'localhost'</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">'nimda'</span>;
+<span class="subst">&gt;</span> GRANT <span class="literal">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="subst">*</span><span class="built_in">.</span><span class="subst">*</span> <span class="keyword">TO</span> <span class="string">'admin'</span>@<span class="string">'127.0.0.1'</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">'nimda'</span>;
+</code></pre><p>停止MySQL</p>
+<pre><code><span class="preprocessor"># /data0/bin/mysql stop         <span class="comment">//没有错误说明用户设置成功了</span></span>
+</code></pre><p>4.编译安装PHP</p>
+<pre><code># tar zxvf php[TAB]
+# cd php[TAB]
+# ./configure 
+    -<span class="ruby">-prefix=<span class="regexp">/usr --with-config-file-path=/data</span><span class="number">0</span>/etc 
+</span>    -<span class="ruby">-with-mysql=<span class="regexp">/usr --with-mysqli=/usr</span><span class="regexp">/bin/mysql</span>_config 
+</span>    -<span class="ruby">-with-iconv-dir=<span class="regexp">/usr/local</span> --with-freetype-dir 
+</span>    -<span class="ruby">-with-jpeg-dir --with-png-dir 
+</span>    -<span class="ruby">-with-zlib --with-libxml-dir=<span class="regexp">/usr 
+</span></span>    -<span class="ruby">-enable-xml --disable-rpath 
+</span>    -<span class="ruby">-enable-bcmath --enable-shmop 
+</span>    -<span class="ruby">-enable-sysvsem --enable-inline-optimization 
+</span>    -<span class="ruby">-with-curl --enable-mbregex 
+</span>    -<span class="ruby">-enable-fpm --enable-mbstring 
+</span>    -<span class="ruby">-with-mcrypt --with-gd --enable-gd-native-ttf 
+</span>    -<span class="ruby">-with-openssl --with-mhash 
+</span>    -<span class="ruby">-enable-pcntl --enable-sockets 
+</span>    -<span class="ruby">-with-ldap --with-ldap-sasl 
+</span>    -<span class="ruby">-with-xmlrpc --enable-zip 
+</span>    -<span class="ruby">-enable-soap --enable-opcache 
+</span>    -<span class="ruby">-with-pdo-mysql --enable-maintainer-zts
+</span># make ZEND_EXTRA_LIBS='-liconv'
+# make install
+# cp php.ini-development /data0/etc/php.ini
+# cd ..
+</code></pre><p>编译memcache扩展模块</p>
+<pre><code><span class="preprocessor"># tar zxvf memcache[TAB]</span>
+<span class="preprocessor"># cd memcache[TAB]</span>
+<span class="preprocessor"># /usr/bin/phpize</span>
+<span class="preprocessor"># ./configure   //我这里可以直接发现php-config，其他路径需加上--with-php-config=/path/to/php-config</span>
+<span class="preprocessor"># make</span>
+<span class="preprocessor"># make install</span>
+</code></pre><p>修改php.ini文件</p>
+<p>查找/data0/etc/php.ini中的extension_dir=”./“，修改为</p>
+<pre><code><span class="setting">extension_dir=<span class="value"><span class="string">"/usr/lib/php/extensions/no-debug-zts-20131226/"</span></span></span>
+</code></pre><p>再其后一行添加</p>
+<pre><code><span class="setting">extension=<span class="value"><span class="string">"memcache.so"</span></span></span>
+</code></pre><p>PHP现在已经不用eaccelerator来加速，而是使用内置的opcache，这里在php.ini中搜索opcache，直接修改相应的配置就行，这里我设置成这样</p>
+<pre><code>[opcache]
+
+zend_extension=<span class="string">"/usr/lib/php/extensions/no-debug-zts-20131226/opcache.so"</span>
+
+; Determines <span class="keyword">if</span> Zend OPCache <span class="keyword">is</span> enabled
+opcache.enable=<span class="number">1</span>
+
+; Determines <span class="keyword">if</span> Zend OPCache <span class="keyword">is</span> enabled <span class="keyword">for</span> <span class="keyword">the</span> CLI <span class="property">version</span> <span class="keyword">of</span> PHP
+opcache.enable_cli=<span class="number">1</span>
+
+; The OPcache shared memory storage size.
+opcache.memory_consumption=<span class="number">128</span>
+
+; The amount <span class="keyword">of</span> memory <span class="keyword">for</span> interned strings <span class="keyword">in</span> Mbytes.
+opcache.interned_strings_buffer=<span class="number">8</span>
+
+; The maximum <span class="type">number</span> <span class="keyword">of</span> keys (scripts) <span class="keyword">in</span> <span class="keyword">the</span> OPcache hash table.
+; Only numbers <span class="keyword">between</span> <span class="number">200</span> <span class="keyword">and</span> <span class="number">100000</span> are allowed.
+opcache.max_accelerated_files=<span class="number">4000</span>
+
+; How often (<span class="keyword">in</span> seconds) <span class="keyword">to</span> check <span class="type">file</span> timestamps <span class="keyword">for</span> changes <span class="keyword">to</span> <span class="keyword">the</span> shared
+; memory storage allocation. (<span class="string">"1"</span> means validate once per <span class="keyword">second</span>, <span class="keyword">but</span> only
+; once per request. <span class="string">"0"</span> means always validate)
+opcache.revalidate_freq=<span class="number">60</span>
+
+; If enabled, a fast shutdown sequence <span class="keyword">is</span> used <span class="keyword">for</span> <span class="keyword">the</span> accelerated code
+opcache.fast_shutdown=<span class="number">1</span>
+</code></pre><p>创建www用户和组</p>
+<pre><code><span class="preprocessor"># mkdir /data0/www</span>
+<span class="preprocessor"># groupadd www</span>
+<span class="preprocessor"># useradd -g www www</span>
+<span class="preprocessor"># chown -R www:www /data0/www</span>
+</code></pre><p>配置php-fpm.conf文件（可以平滑变更php.ini而不用重启cgi)，参照了张宴的设置</p>
+<pre><code><span class="comment"># vim /usr/etc/php-fpm.conf</span>
+
+[global]
+<span class="variable">pid =</span> /data0/logs/php-fpm/php-fpm.pid
+<span class="variable">error_log =</span> /data0/logs/php-fpm/err.log
+<span class="variable">log_level =</span> notice
+<span class="variable">emergency_restart_threshold =</span> <span class="number">10</span>
+<span class="variable">emergency_restart_interval =</span> <span class="number">1</span>m
+<span class="variable">process_control_timeout =</span> <span class="number">5</span>s
+<span class="variable">daemonize =</span> yes
+
+[www]
+<span class="variable">user =</span> www
+<span class="variable">group =</span> www
+<span class="variable">listen =</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">9000</span>
+listen.<span class="variable">backlog =</span> <span class="number">65535</span>
+listen.<span class="variable">mode =</span> <span class="number">0660</span>
+listen.<span class="variable">allowed_clients =</span> <span class="number">127.0</span>.<span class="number">0.1</span>
+<span class="variable">pm =</span> dynamic
+pm.<span class="variable">max_children =</span> <span class="number">128</span>
+pm.<span class="variable">start_servers =</span> <span class="number">20</span>
+pm.<span class="variable">min_spare_servers =</span> <span class="number">5</span>
+pm.<span class="variable">max_spare_servers =</span> <span class="number">35</span>
+pm.<span class="variable">max_requests =</span> <span class="number">1024</span>
+<span class="variable">slowlog =</span> log/$pool.log.slow
+<span class="variable">request_slowlog_timeout =</span> <span class="number">0</span>s
+<span class="variable">request_terminate_timeout =</span> <span class="number">0</span>
+<span class="variable">rlimit_files =</span> <span class="number">65535</span>
+<span class="variable">rlimit_core =</span> <span class="number">0</span>
+<span class="variable">catch_workers_output =</span> yes
+env[HOSTNAME] = $HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+</code></pre><p>尝试启动php-fpm</p>
+<pre><code><span class="preprocessor"># ulimit -SHn 65535</span>
+<span class="preprocessor"># php-fpm</span>
+</code></pre><p>5.安装Nginx</p>
+<pre><code># mkdir /data0/etc/nginx
+# mkdir /data0/logs/nginx
+# mkdir -p /data0/tmp/nginx
+# tar zxvf nginx[TAB]
+# cd nginx[TAB]
+# ./configure 
+    -<span class="ruby">-prefix=<span class="regexp">/usr --conf-path=/data</span><span class="number">0</span>/etc/nginx/nginx.conf 
+</span>    -<span class="ruby">-error-log-path=<span class="regexp">/data0/logs</span><span class="regexp">/nginx/err</span>.log --http-log-path=<span class="regexp">/data0/logs</span><span class="regexp">/nginx/access</span>.log 
+</span>    -<span class="ruby">-pid-path=<span class="regexp">/data0/logs</span><span class="regexp">/nginx/nginx</span>.pid --lock-path=<span class="regexp">/tmp/nginx</span>.lock 
+</span>    -<span class="ruby">-user=www --group=www 
+</span>    -<span class="ruby">-with-ipv6 --with-http_ssl_module 
+</span>    -<span class="ruby">-with-http_spdy_module --with-http_gzip_static_module 
+</span>    -<span class="ruby">-with-http_stub_status_module --http-client-body-temp-path=<span class="regexp">/data0/tmp</span><span class="regexp">/nginx/client</span>_body 
+</span>    -<span class="ruby">-http-proxy-temp-path=<span class="regexp">/data0/tmp</span><span class="regexp">/nginx/proxy</span> --http-fastcgi-temp-path=<span class="regexp">/data0/tmp</span><span class="regexp">/nginx/fastcgi</span> 
+</span>    -<span class="ruby">-http-uwsgi-temp-path=<span class="regexp">/data0/tmp</span><span class="regexp">/nginx/uwsgi</span> --http-scgi-temp-path=<span class="regexp">/data0/tmp</span><span class="regexp">/nginx/scgi</span>
+</span># make &amp; make install
+# cd ..
+</code></pre><p>加了一些没用到的参数，但我相信以后可以用到</p>
+<p>如果nginx已经安装了，就不要make install，执行下面语句升级，配置文件也不会丢失</p>
+<pre><code><span class="preprocessor"># rm -rf /usr/sbin/nginx</span>
+<span class="preprocessor"># cp objs/nginx /usr/sbin/nginx</span>
+<span class="preprocessor"># make upgrade</span>
+</code></pre><p>配置目录权限</p>
+<pre><code><span class="preprocessor"># chmod +w /data0/logs/nginx</span>
+<span class="preprocessor"># chown -R www:www /data0/logs/nginx</span>
+<span class="preprocessor"># chown -R www:www /data0/tmp/nginx</span>
+</code></pre><p>修改配置文件nginx.conf</p>
+<pre><code><span class="comment"># vim /data0/etc/nginx/nginx.conf</span>
+
+<span class="title">user</span>    www www;
+<span class="title">worker_processes</span>  <span class="number">8</span>;
+
+<span class="title">error_log</span>   /data0/logs/nginx/err.log   <span class="built_in">crit</span>;
+<span class="title">worker_rlimit_nofile</span>    <span class="number">65535</span>;
+
+<span class="title">events</span> {
+    <span class="title">use</span>     <span class="built_in">epoll</span>;
+    <span class="title">worker_connections</span>  <span class="number">65535</span>;
+}
+
+<span class="title">http</span> {
+    <span class="title">include</span>       mime.types;
+    <span class="title">default_type</span>  application/octet-stream;
+
+    <span class="title">log_format</span>  main  <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] "<span class="variable">$request</span>" '</span>
+                      <span class="string">'<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> "<span class="variable">$http_referer</span>" '</span>
+                      <span class="string">'"<span class="variable">$http_user_agent</span>" "<span class="variable">$http_x_forwarded_for</span>"'</span>;
+
+    <span class="title">access_log</span> /data0/logs/nginx/access.log  main;
+
+    <span class="title">server_names_hash_bucket_size</span>    <span class="number">128</span>;
+    <span class="title">client_header_buffer_size</span>   <span class="number">32k</span>;
+    <span class="title">large_client_header_buffers</span>     <span class="number">4</span> <span class="number">32k</span>;
+    <span class="title">client_max_body_size</span>    <span class="number">8m</span>;
+
+    <span class="title">sendfile</span>        <span class="built_in">on</span>;
+    <span class="title">tcp_nopush</span>     <span class="built_in">on</span>;
+
+    <span class="title">keepalive_timeout</span>  <span class="number">60</span>;
+
+    <span class="title">tcp_nodelay</span> <span class="built_in">on</span>;
+
+    <span class="title">fastcgi_connect_timeout</span> <span class="number">300</span>;
+    <span class="title">fastcgi_send_timeout</span>    <span class="number">300</span>;
+    <span class="title">fastcgi_read_timeout</span>    <span class="number">300</span>;
+    <span class="title">fastcgi_buffer_size</span>     <span class="number">64k</span>;
+    <span class="title">fastcgi_buffers</span>     <span class="number">4</span>   <span class="number">64k</span>;
+    <span class="title">fastcgi_busy_buffers_size</span>   <span class="number">128k</span>;
+    <span class="title">fastcgi_temp_file_write_size</span>    <span class="number">128k</span>;
+
+    <span class="title">gzip</span>  <span class="built_in">on</span>;
+    <span class="title">gzip_min_length</span>     <span class="number">1k</span>;
+    <span class="title">gzip_buffers</span>    <span class="number">4</span>   <span class="number">16k</span>;
+    <span class="title">gzip_http_version</span>   <span class="number">1</span>.<span class="number">0</span>;
+    <span class="title">gzip_comp_level</span>     <span class="number">2</span>;
+    <span class="title">gzip_types</span>      text/plain application/x-javascript text/css application/xml;
+    <span class="title">gzip_vary</span>       <span class="built_in">on</span>;
+
+    <span class="title">server</span> {
+        <span class="title">listen</span>       <span class="number">80</span>;
+        <span class="title">server_name</span>  localhost;
+        <span class="title">index</span> index.html index.htm index.php;
+        <span class="title">root</span> /data0/www;
+
+        <span class="comment">#error_page  404              /404.html;</span>
+
+        <span class="comment"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span>
+        <span class="comment">#</span>
+        <span class="title">location</span> <span class="regexp">~ .*\.(php|php5)?$</span> {
+            <span class="title">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;
+            <span class="title">fastcgi_index</span>  index.php;
+            <span class="title">fastcgi_param</span>  SCRIPT_FILENAME  /scripts<span class="variable">$fastcgi_script_name</span>;
+            <span class="title">include</span>        fastcgi_params;
+        }
+
+        <span class="title">location</span> <span class="regexp">~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</span> {
+            <span class="title">expires</span> <span class="number">30d</span>;
+        }
+
+        <span class="title">location</span> <span class="regexp">~ .*\.(js|css)?$</span> {
+            <span class="title">expires</span> <span class="number">1h</span>;
+        }
+
+        <span class="title">location</span> /status/ {
+            <span class="title">stub_status</span> <span class="built_in">on</span>;
+            <span class="title">access_log</span>  <span class="built_in">off</span>;
+        }
+    }
+}
+</code></pre><p>最后启动nginx</p>
+<pre><code><span class="preprocessor"># ulimit -SHn 65535</span>
+<span class="preprocessor"># nginx</span>
+</code></pre></div></article><div class="archive-pagination"><div class="paginator"><span class="page-number current">1</span><a class="page-number" href="/archives/2015/page/2/">2</a><a class="extend next" rel="next" href="/archives/2015/page/2/">&raquo;</a></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Animes/">Animes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Archlinux/">Archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webserver/">Webserver</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>
