@@ -1,12 +1,12 @@
-title: Fiotose
+title: Uyiim
 subtitle:
 description:
-author: Fiotose
-email: Fiotose@gmail.com
+author: Uyiim
+email: 
 language: zh_CN
 
-url: http://Fiotose.github.io
-root: /
+url: /
+root: /blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
