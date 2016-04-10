@@ -6,7 +6,7 @@ email:
 language: zh_CN
 
 url: /
-root: "/blog/"
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
