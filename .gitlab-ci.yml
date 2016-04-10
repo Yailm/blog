@@ -8,8 +8,7 @@ pages:
   script:
   - npm install hexo-cli -g
   - npm install
-  - git config --global user.name "Uyiim"
-  - git config --global user.email "fiotose@gmail.com"
+  - hexo g
   - hexo deploy
   artifacts:
     paths:
