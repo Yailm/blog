@@ -8,6 +8,9 @@ pages:
   script:
   - npm install hexo-cli -g
   - npm install
+  - cd themes/simpleblock
+  - npm install
+  - cd ../..
   - hexo g
   - hexo deploy
   artifacts:
