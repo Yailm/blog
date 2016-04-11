@@ -1,6 +1,0 @@
-{
-  "name": "hexo-theme-simpleblock",
-  "dependencies": {
-    "primer-css": "~2.2.1"
-  }
-}
