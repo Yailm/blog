@@ -2,7 +2,7 @@
 google_analytics: UA-63884172-1
 
 ## Meta
-rss: /atom.xml
+rss: /blog/atom.xml
 favicon: /blog/favicon.png
 icon: /blog/favicon.png
 source_url:
@@ -12,11 +12,11 @@ license:
 
 ## Menus
 menus:
-  'Home': /
+  'Home': /blog/
 
 right_menus:
   'Github': 'https://github.com/Uyiim'
-  'RSS': /atom.xml
+  'RSS': /blog/atom.xml
 
 ## Banners && Widgets
 banners:
