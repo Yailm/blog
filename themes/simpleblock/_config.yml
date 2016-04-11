@@ -3,8 +3,8 @@ google_analytics: UA-63884172-1
 
 ## Meta
 rss: /atom.xml
-favicon: /favicon.png
-icon: /favicon.png
+favicon: /blog/favicon.png
+icon: /blog/favicon.png
 source_url:
 license:
   name: 'CC BY-NC-SA 3.0'
