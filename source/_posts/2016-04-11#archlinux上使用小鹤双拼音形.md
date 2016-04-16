@@ -1,7 +1,7 @@
 title: 在archlinux上使用小鹤双拼音形
 date: 2016-04-11 11:14:23
 tags:
-  - Archlinux
+  - archlinux
 ---
 这是以前配置过的，不过近来写了些相应的脚本，也算是不太水的文章。同时也安利下[小鹤双拼](http://www.flypy.com)，能减少击键次数，提高打字速度
 

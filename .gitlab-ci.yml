@@ -4,6 +4,7 @@ pages:
   cache:
     paths:
     - node_modules/
+    - themes/simpleblock/node_modules/
 
   script:
   - npm install hexo-cli -g

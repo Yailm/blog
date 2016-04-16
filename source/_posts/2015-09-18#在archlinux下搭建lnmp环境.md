@@ -1,8 +1,8 @@
 title: 在archlinux下搭建lnmp环境
 date: 2015-09-18 23:21:31
 tags:
-  - Webserver
-  - Archlinux
+  - webserver
+  - archlinux
 ---
 本文主要根据[张宴的BLOG](http://zyan.cc)，我在centos虚拟机搭建成功后，想想也在archlinux练练，把搭建的笔记整理了一下。
 
