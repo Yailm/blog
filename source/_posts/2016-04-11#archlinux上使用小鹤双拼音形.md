@@ -9,7 +9,7 @@ tags:
 
     sudo pacman -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-rime
 
-这如果想要有图形界面来设置fcitx，可以安装**fcitx-configtool**。**fcitx-rime**是中文输入法[rime](http://rime.im)的fcitx版本，需要设置的东西比较多，自定义当然就强了。
+这如果想要有图形界面来设置fcitx，可以安装**fcitx-configtool**。**fcitx-rime**是中文输入法[rime](http://rime.im)的fcitx版本，需要设置的东西比较多，自定义当然就强。
 
 我使用的桌面管理器，并不是完善的环境，系统启用输入法需要在.xinitrc中加入以下环境变量
 
@@ -59,7 +59,8 @@ tags:
         states: [ 中标, 英标 ]
 
     engine:                 # 使用一些输入法引擎
-      processors:           # 这里只使用了一些基本配置，[雪齋的文檔](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)详细介绍了这部分的内容
+      processors:
+      # 这里只使用了一些基本配置，[雪齋的文檔](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)详细介绍了这部分的内容
         - ascii_composer
         - recognizer
         - key_binder
