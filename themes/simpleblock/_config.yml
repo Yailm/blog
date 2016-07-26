@@ -13,6 +13,7 @@ license:
 ## Menus
 menus:
   'Home': /blog/
+  'Wiki': /wiki/
 
 right_menus:
   'Github': 'https://github.com/Uyiim'
