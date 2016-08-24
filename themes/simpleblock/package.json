@@ -1,12 +1,12 @@
 {
   "name": "hexo-theme-simpleblock",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A simple theme for Hexo.",
   "homepage": "https://jysperm.me",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jysperm/hexo-theme-simpleblock.git"
+    "url": "https://github.com/jysperm/hexo-theme-simpleblock.git"
   },
   "contributors": [
     {
@@ -16,46 +16,18 @@
     }
   ],
   "dependencies": {
-    "coffee-script": "1.7.1",
-    "pug": "",
-    "marked": "0.3.3"
+    "pug":"",
+    "marked": ""
   },
   "devDependencies": {
-    "bower": "1.4.1",
-    "gulp": "3.8.10",
-    "gulp-concat": "2.4.3",
-    "gulp-less": "2.0.1",
-    "gulp-clean-css": "",
-    "gulp-order": "1.1.1",
-    "main-bower-files": "2.5.0",
-    "gulp-shell": "0.4.2",
-    "gulp-add-src": "0.2.0",
-    "gulp-sass": "2.0.4",
-    "gulp-tar": "1.4.0"
-  },
-  "bugs": {
-    "url": "https://github.com/jysperm/hexo-theme-simpleblock/issues"
-  },
-  "_id": "hexo-theme-simpleblock@0.1.4",
-  "scripts": {},
-  "_shasum": "9c37e784190bf995e4d420dd9ac5771839ceb7cc",
-  "_from": "hexo-theme-simpleblock@*",
-  "_npmVersion": "2.11.3",
-  "_nodeVersion": "0.12.7",
-  "_npmUser": {
-    "name": "jysperm",
-    "email": "jysperm@gmail.com"
-  },
-  "dist": {
-    "shasum": "9c37e784190bf995e4d420dd9ac5771839ceb7cc",
-    "tarball": "https://registry.npmjs.org/hexo-theme-simpleblock/-/hexo-theme-simpleblock-0.1.4.tgz"
-  },
-  "maintainers": [
-    {
-      "name": "jysperm",
-      "email": "jysperm@gmail.com"
-    }
-  ],
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/hexo-theme-simpleblock/-/hexo-theme-simpleblock-0.1.4.tgz"
+    "bower": "",
+    "gulp": "",
+    "gulp-concat": "",
+    "gulp-less": "",
+    "gulp-clean-css":"",
+    "gulp-order": "",
+    "main-bower-files": "",
+    "gulp-add-src": "",
+    "gulp-sass": ""
+  }
 }
