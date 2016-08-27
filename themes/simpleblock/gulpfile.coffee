@@ -1,4 +1,4 @@
-minifyCSS = require 'gulp-minify-css'
+minifyCSS = require 'gulp-clean-css'
 concat = require 'gulp-concat'
 addSrc = require 'gulp-add-src'
 order = require 'gulp-order'
