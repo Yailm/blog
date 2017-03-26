@@ -59,8 +59,8 @@ feed:
   limit: 20
 
 # Deployment
-#deploy:
-  #type: git
-  #repo: http://github.com/Fiotose/Fiotose.github.io
-  #branch: master
-  #message: Updated {{ now("YYYY-MM-DD HH:mm:ss") }}
+deploy:
+  type: git
+  repo: http://github.com/yailm/blog
+  branch: master
+  message: Updated {{ ("YYYY-MM-DD HH:mm:ss") }}
