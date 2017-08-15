@@ -61,6 +61,6 @@ feed:
 # Deployment
 deploy:
   type: git
-  repo: http://github.com/yailm/blog
-  branch: master
-  message: Updated {{ ("YYYY-MM-DD HH:mm:ss") }}
+  repo: git@github.com:/Yailm/blog
+  branch: gh-pages
+  message: updated {{ now("YYYY-MM-DD HH:mm:ss") }}

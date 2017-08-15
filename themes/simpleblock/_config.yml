@@ -13,16 +13,16 @@ license:
 ## Menus
 menus:
   'Home': /blog/
-  'Wiki': /wiki/
+  'Wiki': 'https://github.com/Yailm/wiki'
 
 right_menus:
-  'Github': 'https://github.com/Uyiim'
+  'Github': 'https://github.com/Yailm'
   'RSS': /blog/atom.xml
 
 ## Banners && Widgets
 banners:
   markdown: |
-      成为资深的linux运维工程师，没事也能写写小软件，或是贡献开源
+      努力成长，终点远着
 
 widgets:
   -
