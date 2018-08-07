@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>archlinuxarm上配置使用AUR | Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><article><header><small class="right"><a target="_blank" href="null_posts%2F2016-08-04%23archlinuxarm%E4%B8%8A%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8AUR.md">查看源代码</a></small><h2>archlinuxarm上配置使用AUR</h2></header><div class="article-meta clearfix"><time class="left">2016-08-04</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li></ul></div><div class="markdown-body"><p>在树莓派上安装了个archlinuxarm，习惯性想使用AUR里的软件，配置起来有点麻烦就记录一下</p>
+<p>首先如通常一样，编辑/etc/pacman.conf文件添加新的archlinuxcn源</p>
+<pre><code>vi /etc/pacman.conf
+
+# 在最后面追加以下内容
+[archlinuxcn]
+SigLevel=Never
+Server=http://repo.archlinuxcn.org/any
+</code></pre><p>正常情况下，地址是<code>http://repo.archlinuxcn.org/$arch</code>，由于是arm版本，在浏览器中打开<a href="http://repo.archlinuxcn.org" target="_blank" rel="noopener">http://repo.archlinuxcn.org</a> ，发现里面是没有arm之类的目录的。所以如果使用<code>$arch</code>的话，你就会得到个’failed retrieving file ‘archlinuxcn.db’ ….’的提示，并不是网络不好，404表明没有个这文件</p>
+<p>之后，在更新源后直接安装yaourt会提示要package-query&gt;=1.8，但package-query不是在AUR里吗？只能手动下载这个包离线安装</p>
+<pre><code>wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+tar -xvf package-query.tar.gz
+</code></pre><p>注意有些依赖</p>
+<pre><code>sudo pacman -S gcc yaji make fakeroot pkg-config
+makepkg -i
+</code></pre><p>最后就能直接安装yaourt了</p>
+<pre><code>sudo pacman -S yaourt
+</code></pre></div></article></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

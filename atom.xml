@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Uyiim</title>
+  
+  <link href="/blog/atom.xml" rel="self"/>
+  
+  <link href="/"/>
+  <updated>2018-08-07T09:40:53.021Z</updated>
+  <id>/</id>
+  
+  <author>
+    <name>Uyiim</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2n+1真假话问题二</title>
+    <link href="/2017/08/15/2n-1%E7%9C%9F%E5%81%87%E8%AF%9D%E9%97%AE%E9%A2%98%E4%BA%8C/"/>
+    <id>/2017/08/15/2n-1真假话问题二/</id>
+    <published>2017-08-15T13:31:21.000Z</published>
+    <updated>2018-08-07T09:40:53.021Z</updated>
+    
+    <content type="html"><![CDATA[<p>接着上次话题，这次将会有更好解决方案</p>
+<h4 id="尝试发现规律"><a href="#尝试发现规律" class="headerlink" title="尝试发现规律"></a>尝试发现规律</h4><p>反正问题到现在也就一句话：<strong>如何快速找到任意一个A类人</strong>，或者说，如何快速地缩小范围？</p>
+<p>当成算法优化问题考虑，你应该从2这个数字去入手，二分法二叉树已经在这方面给过提示。那为什么不考虑3/4/5之类的呢？拿分类来讲，分3类需要询问2次，只排除了2/3。每次排除1/n也就n=2时最大，效率也最高</p>
+<p>综上，有了思考的方向，来一起看看结果：</p>
+<p>下面是两个未知类别相互之间的判断</p>
+<p><img src="/blog/images/20170815-1.png" alt="真假话问题"></p>
+<p>可以发现，在图上红色框中两种情况，两个人之间的判断都是“对方是A类人”，而他们也都是同样类别的。这不是瞎掰的，因为如果一个A类人和B类人，A类人说真话，就不会有这样情况</p>
+<blockquote>
+<p>结论：如果两个人相互判断对方是A类人，那他们为同一类别</p>
+</blockquote>
+<h4 id="利用规律"><a href="#利用规律" class="headerlink" title="利用规律"></a>利用规律</h4><p>那该怎样利用这一结论呢？简单来说，如果两个人是同样类别的，我们随意去掉其中一人，这将使需要确定或是还未被确定类别的大大减少</p>
+<p>不对，应该在把后面这个加上才算是“大大减少”：</p>
+<blockquote>
+<p>两个人中任意一个给出“他是B”的结论，那对不起，两个人都扔掉</p>
+</blockquote>
+<p>可以结合上图，或自己考虑下。只要说出“他是B”，那两个人的类别只有两种情况：两个B类人；一个A类一个B类人<br>都不要了呗，反正A类比B类人多，买卖亏不成</p>
+<h4 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h4><p>这样下来方法可能就很多了，这里我给出我的方案：</p>
+<ul>
+<li>2N+1个人，取一个人e出来（两种情况：e是B类人，那A类人至少比B类人多2个；e是A类人，那A类大于等于B类的人数）</li>
+<li>剩下的2N个人，两两一组共形成N组，相互给出对方的评价</li>
+<li>对于相互都给出“对方是A”结论的组，每个组中都挑出一个人来，剩余的人都可以丢<br>PS. 这里提一下，现在剩余的人依然是A类人大于等于B类人，（两个A类人组必然能留下一个A类人，但两个B类人组却不一定，且A类人几乎比B类人多）</li>
+<li><p>然后判断一下剩余人数的奇偶性</p>
+<ul>
+<li>奇数，e就可以丢了（我们无法定义他的身份），我们再拉一个人上台成为新的e，剩余人也刚好为偶数</li>
+<li>偶数，不作为</li>
+</ul>
+</li>
+<li><p>重复刚才的操作</p>
+</li>
+</ul>
+<p>可以直接看最后，如果最后没有人从小组中出来，那台上的e一定是A类人<br>或是最后只剩下一个人，那他只能是A类人</p>
+<p>这个方法相比于前一个方法n^2，它只需要<strong>nlogn</strong>的询问次数，而且在概率上，出现较坏情况的可能性也降低了许多（毕竟两个B类的组也不是总能伪装成功），每过一个流程，范围都在迅速缩小</p>
+<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>这个问题在网上讨论挺少的，给出的也多是第一种方案。其实这文章应该写得带数据图那样的，我没有深入了解题目内在固定关联（比如，题目中给出的每个人自我判断是不是多余的）期望以后能看到这题完整详尽的解答，最好能得出和我一样的结论</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接着上次话题，这次将会有更好解决方案&lt;/p&gt;
+&lt;h4 id=&quot;尝试发现规律&quot;&gt;&lt;a href=&quot;#尝试发现规律&quot; class=&quot;headerlink&quot; title=&quot;尝试发现规律&quot;&gt;&lt;/a&gt;尝试发现规律&lt;/h4&gt;&lt;p&gt;反正问题到现在也就一句话：&lt;strong&gt;如何快速找到任
+    
+    </summary>
+    
+    
+      <category term="logic" scheme="/tags/logic/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2n+1真假话问题（一）</title>
+    <link href="/2017/08/14/2n-1%E7%9C%9F%E5%81%87%E8%AF%9D%E9%97%AE%E9%A2%98%E4%B8%80/"/>
+    <id>/2017/08/14/2n-1真假话问题一/</id>
+    <published>2017-08-13T16:25:30.000Z</published>
+    <updated>2018-08-07T09:40:53.020Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近什么都没得到挺郁闷的，不会是我没更新这里吧</p>
+<p>这是上次同学找导师留的题目，那时抽空让我帮他看看</p>
+<h4 id="题目是这样"><a href="#题目是这样" class="headerlink" title="题目是这样:"></a>题目是这样:</h4><blockquote>
+<p>有2n+1个人，其中有部分人只说真话为A类人，有部分人可能说真话可能说假话为B类人。（这个定义了就不会说成绕口令）<br>已知A类人至少有n+1个而B类人至多有n个<br>你只能问这样的问题：询问a：“b是不是说真话的人？“。a，b可以是同一个人，即问一个人，他自己是不是只说真话的人<br>请设计一个算法，用尽量少的询问次数使你确认所有人是哪类人？</p>
+</blockquote>
+<p>大部分人看到这个题目，都能在10分钟理清思路：</p>
+<blockquote>
+<p>那就是找到一个A类人（说真话），让他确认其他剩余的人</p>
+</blockquote>
+<p>怎么找到这样一个人呢？所有2n+1个人里面，A类人占了一半以上，这有点像表决，他们始终能主导结果</p>
+<p>那就设立个台子，我们每次拎一个人上来，<strong>剩余</strong>的人来对他进行确认</p>
+<p>结果只有三种情况：</p>
+<ol>
+<li>平票，结论是底下A B两类人都为n个，那台上的人为A类人（因为A类人至少有n+1个）</li>
+<li>A比B多，那台上的人就是A类人</li>
+<li>B比A多，台上是B类人</li>
+</ol>
+<p>对于前两种情况，很好，我们找到了一个说真话的人，接下来只要让他发言问题就行了<br>但如果不幸第3种，就必须重新刚才的操作，直到发现一个A类人或所有B类人</p>
+<h4 id="考虑下最坏的情况："><a href="#考虑下最坏的情况：" class="headerlink" title="考虑下最坏的情况："></a>考虑下最坏的情况：</h4><ul>
+<li>所有的B类人都隐藏自己，全部说真话</li>
+<li>我们拎出来也恰好都是B类人（除了最后一个，下面提）</li>
+<li>还有，n个B类人，n+1个A类人</li>
+</ul>
+<p>虽然是最坏情况，但必须基于合理且不多余的询问：应该加上提前中断机制：如果有一半及以上的人给出对台上人的相同判断，结果就已然确定</p>
+<p>同时不提倡B类人去说假话，不合群的判断会导致直接从团队中剔除，而他自己对询问次数的贡献仅仅为1（他干扰了前面的中断机制，使得其多询问一人）</p>
+<p>再考虑一下最后关头，n+2个人，里面有个B类人（瑟瑟发抖），我们也应该拎出来个A类人，让他判断剩余的人，这样才是最坏的情况</p>
+<h4 id="总结一下："><a href="#总结一下：" class="headerlink" title="总结一下："></a>总结一下：</h4><p>第一次，B类人被拎上去，台下总共2n个人，前n个都说台上人是B类的，那就直接扔了他（询问次数+n）<br>第二次，另一个B类人被拎上去，台下2n-1（询问次数+n）<br>…</p>
+<p>询问总次数：</p>
+<ul>
+<li>(n为偶数）n+n+(n-1)+(n-1)+…+(n/2+2)+(n/2+2)+(n/2+1)+[(n/2+1)+n] = 0.75n2+1.5n</li>
+<li>(n为奇数）n+n+(n-1)+(n-1)+…+((n+3)/2)+((n+3)/2)+[((n+1)/2)+n] = 0.75n2+1.5n-0.25</li>
+</ul>
+<p>这是普通的方法，下篇用优化过的方法</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近什么都没得到挺郁闷的，不会是我没更新这里吧&lt;/p&gt;
+&lt;p&gt;这是上次同学找导师留的题目，那时抽空让我帮他看看&lt;/p&gt;
+&lt;h4 id=&quot;题目是这样&quot;&gt;&lt;a href=&quot;#题目是这样&quot; class=&quot;headerlink&quot; title=&quot;题目是这样:&quot;&gt;&lt;/a&gt;题目是这样:&lt;
+    
+    </summary>
+    
+    
+      <category term="logic" scheme="/tags/logic/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>opencv中摄像头图像的“实时”获取</title>
+    <link href="/2016/08/30/opencv%E4%B8%AD%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E7%9A%84%E2%80%9C%E5%AE%9E%E6%97%B6%E2%80%9D%E8%8E%B7%E5%8F%96/"/>
+    <id>/2016/08/30/opencv中摄像头图像的“实时”获取/</id>
+    <published>2016-08-30T15:39:41.000Z</published>
+    <updated>2018-08-07T09:40:53.020Z</updated>
+    
+    <content type="html"><![CDATA[<p>这段时间要做项目学习了下opencv，准备通过摄像头来捕捉人体。心里有个疑问，对于从摄像头获取的图像，如果对图像的分析处理时间很长，那么下一次再从摄像头获取的图像是什么时候的呢？有两个选项，一个是紧临上一次的图像，或者是处理结束后即时获取的图像。正好准备解决这个问题，写了代码来验证一下</p>
+<pre><code>import cv2
+import time
+
+cap = cv2.VideoCapture(0)
+for i in range(15):
+    ret, image = cap.read()
+    cv2.imwrite(&apos;/tmp/image%02d.jpg&apos; % i, image)
+    print(&quot;get&quot;, i+1)
+    time.sleep(3)   # 代替耗时的操作
+cap.release()
+</code></pre><p>那，这个程序怎么验证呢？用手机开个秒表，计时并放在摄像头前面，之后所有的图片得到这样的结果</p>
+<p>01.78s（手机移动到摄像头花了点时间）<br>01.81s<br>01.85s<br>01.87s<br>01.92s<br>04.83s<br>07.84s<br>….大概后面都能以约3秒的间隔<br>最后是31.95s，而我一结束就马上关闭了秒表，停留在48.35s</p>
+<p>出现这样的结果，能马上想到获取的图像其实是有缓冲区的，大小为5张图片的样子，而其后能保持间隔，不正是生产者消费者的问题吗？</p>
+<p>假设摄像头以每秒30帧获取图像的话，那么程序就是每3秒才取走一张图片，进而促使摄像头继续获取图像。不难解释后面31.95和45.35s<br>此时应该是31.95的图片在缓冲区的底端，类似这样</p>
+<p>44.10<br>41.05<br>38.01<br>34.98<br>31.95</p>
+<p>当31.95被取出的时候，(44.10+3s)才进入缓冲区，这才是当时真正的时间</p>
+<p>所以，当我们调用摄像头并对图像使用耗时的操作时，是没有做到实时的。可以事先计算图像操作的耗时（一般都会比读取的时间多），只要知道它大于读取耗费的时间，那么我们就能知道这样一个结论：<code>当我们获取的图像的时候，缓冲区都是满的</code>，而且是以前的图像，真正想要的在缓冲区外面，所以只要读取并舍弃这些图像</p>
+<pre><code>for x in range(5): cap.read()
+</code></pre><p>这样，摄像头就能称得上是实时的了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这段时间要做项目学习了下opencv，准备通过摄像头来捕捉人体。心里有个疑问，对于从摄像头获取的图像，如果对图像的分析处理时间很长，那么下一次再从摄像头获取的图像是什么时候的呢？有两个选项，一个是紧临上一次的图像，或者是处理结束后即时获取的图像。正好准备解决这个问题，写了代
+    
+    </summary>
+    
+    
+      <category term="opencv python" scheme="/tags/opencv-python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>archlinuxarm上配置使用AUR</title>
+    <link href="/2016/08/04/archlinuxarm%E4%B8%8A%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8AUR/"/>
+    <id>/2016/08/04/archlinuxarm上配置使用AUR/</id>
+    <published>2016-08-04T12:41:41.000Z</published>
+    <updated>2018-08-07T09:40:53.019Z</updated>
+    
+    <content type="html"><![CDATA[<p>在树莓派上安装了个archlinuxarm，习惯性想使用AUR里的软件，配置起来有点麻烦就记录一下</p>
+<p>首先如通常一样，编辑/etc/pacman.conf文件添加新的archlinuxcn源</p>
+<pre><code>vi /etc/pacman.conf
+
+# 在最后面追加以下内容
+[archlinuxcn]
+SigLevel=Never
+Server=http://repo.archlinuxcn.org/any
+</code></pre><p>正常情况下，地址是<code>http://repo.archlinuxcn.org/$arch</code>，由于是arm版本，在浏览器中打开<a href="http://repo.archlinuxcn.org" target="_blank" rel="noopener">http://repo.archlinuxcn.org</a> ，发现里面是没有arm之类的目录的。所以如果使用<code>$arch</code>的话，你就会得到个’failed retrieving file ‘archlinuxcn.db’ ….’的提示，并不是网络不好，404表明没有个这文件</p>
+<p>之后，在更新源后直接安装yaourt会提示要package-query&gt;=1.8，但package-query不是在AUR里吗？只能手动下载这个包离线安装</p>
+<pre><code>wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+tar -xvf package-query.tar.gz
+</code></pre><p>注意有些依赖</p>
+<pre><code>sudo pacman -S gcc yaji make fakeroot pkg-config
+makepkg -i
+</code></pre><p>最后就能直接安装yaourt了</p>
+<pre><code>sudo pacman -S yaourt
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在树莓派上安装了个archlinuxarm，习惯性想使用AUR里的软件，配置起来有点麻烦就记录一下&lt;/p&gt;
+&lt;p&gt;首先如通常一样，编辑/etc/pacman.conf文件添加新的archlinuxcn源&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vi /etc/pacman.conf
+
+    
+    </summary>
+    
+    
+      <category term="archlinux" scheme="/tags/archlinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux下使用adbyby清除广告</title>
+    <link href="/2016/08/02/linux%E4%B8%8B%E4%BD%BF%E7%94%A8adbyby%E6%B8%85%E9%99%A4%E5%B9%BF%E5%91%8A/"/>
+    <id>/2016/08/02/linux下使用adbyby清除广告/</id>
+    <published>2016-08-02T12:47:36.000Z</published>
+    <updated>2018-08-07T09:40:53.019Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://www.adbyby.com/" target="_blank" rel="noopener">adbyby</a>是一款跨平台的专业去广告软件，虽然提供的linux比较简陋，但也保持了它优秀的性能（不卡网，过滤强劲）。虽然现在浏览器的插件已经包揽了去广告的市场，但是在使用其他的软件就不能获得过滤（比如我使用的goldendic电子词典时，载入网络查词时也加载广告，占用了许多时间）</p>
+<p>要安装adbyby，官网提供了64位和86位，我这里是64位系统（话说32位也。。），顺便解压一下</p>
+<pre><code>wget http://update.adbyby.com/download/linux.64.tar.gz
+tar -xvf linux.64.tar.gz
+</code></pre><p>得到一个bin文件夹，里面就有我们想要的可执行文件了，直接执行<code>./adbyby &amp;</code>就在本机的8118端口开启过滤了。但真正安定下来还需要做几件事</p>
+<ul>
+<li><p>代理的设置</p>
+<ul>
+<li><p>设置系统代理，在.bashrc中追加</p>
+<pre><code>export http_proxy=http://127.0.0.1:8118/
+export https_proxy=$http_proxy
+</code></pre><p>只要软件使用了系统代理，通过的数据就会被过滤。但也有的软件会<code>direct link</code>，但也提供系统代理（如chrome、goldendict），需要自己到高级设置里去找</p>
+</li>
+<li><p>chromium系的浏览器推荐使用<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en-US" target="_blank" rel="noopener">SwitchyOmega</a>，好用是有道理的，如果只想在浏览器里使用的话，新建个配置adbyby，设定到本机的8118端口即可</p>
+</li>
+</ul>
+</li>
+<li><p>adbyby的自启动</p>
+<p>adbyby有专门的配置文件adhook.ini，也提供了<a href="http://www.adbyby.com/setup.htm" target="_blank" rel="noopener">配置说明</a>，但没有在默认adhook.ini出现的选项都是无效的，而且已经不用再设置了</p>
+<p>一般方便管理软件的启动我倾向于写成system unit，在<code>/usr/lib/systemd/system/</code>下创建文件adbyby.service，内容如下</p>
+<pre><code>#systemd service configuration file for adbyby
+
+[Unit]
+Description=Adbyby
+After=network.target
+
+[Service]
+User=fio
+Type=simple
+ExecStart=/path/to/adbyby binary
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>然后设置成开机启动项</p>
+<pre><code>systemctl daemon-reload
+systemctl start adbyby.service    # 启动adbyby服务
+systemctl enable adbyby.service   # 设置成自启动
+</code></pre></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://www.adbyby.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;adbyby&lt;/a&gt;是一款跨平台的专业去广告软件，虽然提供的linux比较简陋，但也保持了它优秀的性能（不卡网，过滤强劲）。虽然现在浏览器的插件已
+    
+    </summary>
+    
+    
+      <category term="archlinux" scheme="/tags/archlinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>wiki施工未完毕</title>
+    <link href="/2016/07/26/wiki%E6%96%BD%E5%B7%A5%E6%9C%AA%E5%AE%8C%E6%AF%95/"/>
+    <id>/2016/07/26/wiki施工未完毕/</id>
+    <published>2016-07-26T07:28:08.000Z</published>
+    <updated>2018-08-07T09:40:53.018Z</updated>
+    
+    <content type="html"><![CDATA[<p>好久之前开始弄的vimwiki，然后想做成在线的wiki，真是拖延症啊到现在才完成，而且还简陋。</p>
+<p>网页的样式和我使用的<a href="https://github.com/iamcco/markdown-preview.vim" target="_blank" rel="noopener">markdown-preview</a>预览一模一样，反正挺喜欢的。感觉自己可以勤快起来了，要坚持多记录下多的东西</p>
+<p>由于没有域名，就直接放在博客旁边了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;好久之前开始弄的vimwiki，然后想做成在线的wiki，真是拖延症啊到现在才完成，而且还简陋。&lt;/p&gt;
+&lt;p&gt;网页的样式和我使用的&lt;a href=&quot;https://github.com/iamcco/markdown-preview.vim&quot; target=&quot;_blank
+    
+    </summary>
+    
+    
+      <category term="wiki" scheme="/tags/wiki/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python将list转换成可变参数</title>
+    <link href="/2016/05/08/python%E5%B0%86list%E8%BD%AC%E6%8D%A2%E6%88%90%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/"/>
+    <id>/2016/05/08/python将list转换成可变参数/</id>
+    <published>2016-05-08T05:15:44.000Z</published>
+    <updated>2018-08-07T09:40:53.018Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是刚刚学会的新技能，比如asyncio模块中的如下一种方法</p>
+<pre><code>import asyncio
+asyncio.subprocess.create_subprocess_exec(program, *args, 
+    stdin=None, stdout=None, stderr=None, loop=None, limit=65536, **kwds)
+</code></pre><p>这里的program和args是分开的，如果你有一串命令要执行，比如<code>ls -al /tmp</code>。</p>
+<p>这里我们要同时将命令分解成ls和它的参数，而且我们若在函数中放入列表就会产生错误，通过计算参数的个数再传入函数也是不合理</p>
+<p>然而今天才学到，python可以这样写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">command = <span class="string">'ls -al /tmp'</span></span><br><span class="line">command_list = command.split()</span><br><span class="line">asyncio.subprocess.create_subprocess_exec(*command_list)</span><br></pre></td></tr></table></figure></p>
+<p>不仅列表可以，同样也能适用于字典</p>
+<pre><code>def test(**kw):
+    print(kw)
+
+a = {&apos;a&apos;:1, &apos;c&apos;:2}
+test(**a)
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是刚刚学会的新技能，比如asyncio模块中的如下一种方法&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import asyncio
+asyncio.subprocess.create_subprocess_exec(program, *args, 
+    stdin=None, s
+    
+    </summary>
+    
+    
+      <category term="python" scheme="/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>谈谈现在自己的错误</title>
+    <link href="/2016/04/24/%E8%B0%88%E8%B0%88%E7%8E%B0%E5%9C%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E9%94%99%E8%AF%AF/"/>
+    <id>/2016/04/24/谈谈现在自己的错误/</id>
+    <published>2016-04-24T07:02:51.000Z</published>
+    <updated>2018-08-07T09:40:53.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天我们实验室开了一次例会，对我有非常大的打击。大概是这样的，同室里的一个伙伴，以前和我一起接触linux，当初我的底子比他要好，所有起点也不大同。我早早用上了arch，一直使用的终端命令，而那时他还只是用鼠标点来点去。可是现在，我只能说他用得比我好太多了，然而为什么会变成这样呢？我想我大概自己要改进的部分原因</p>
+<p>说起来其实也很好笑，一个说自己会vim的人，就一直对着代码 jjjjjjjjjjjjjjjjjjjjjjjjjjkkkkkkkkkkkkkkkkkkggG ，的确很好笑。所说的使用命令行， ls 对着结果找了好久。相当高级的命令却不怎么见到，唉，现在才发现了问题</p>
+<ul>
+<li><p>要做事的时候想清楚</p>
+<p>的确我能不假思索的使用jjjjjjkkkkk，但是并不，唉那个怎么说。现在就是希望能清楚自己要的是什么，然后多花点脑子。<br>自己打字的时候就好像不用脑子的，总是去试探一个按键，按错就马上改，这是不行的</p>
+</li>
+<li><p>不要安于现状</p>
+<p>遇到什么事情，不要只是用简单的方法解决了就行，这样是学不到东西的。要学会利用新的工具，查看其manual文档</p>
+</li>
+<li><p>了解问题要全面</p>
+<p>就好像例会上曾翔钰给我们讲的string和stringbuffer一样，其实她自己也不是非常清楚。也像我前面的博客，一知半解，却放了上来</p>
+</li>
+</ul>
+<hr>
+<p>总结完了，我想了想自己的任务，为了不至于成为鄙陋的人</p>
+<ul>
+<li>每天一条linux的命令学习</li>
+<li>vimdoc</li>
+<li>做事可以慢一点，想清楚点</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨天我们实验室开了一次例会，对我有非常大的打击。大概是这样的，同室里的一个伙伴，以前和我一起接触linux，当初我的底子比他要好，所有起点也不大同。我早早用上了arch，一直使用的终端命令，而那时他还只是用鼠标点来点去。可是现在，我只能说他用得比我好太多了，然而为什么会变成
+    
+    </summary>
+    
+    
+      <category term="program" scheme="/tags/program/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>u_undo: line numbers wrong</title>
+    <link href="/2016/04/18/u-undo-line-numbers-wrong/"/>
+    <id>/2016/04/18/u-undo-line-numbers-wrong/</id>
+    <published>2016-04-18T13:19:17.000Z</published>
+    <updated>2018-08-07T09:40:53.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>在一次强制关机后，开机准备继续写wiki，然后竟然发现perl.md只剩下117行，突然感觉自己的汗毛都倒立了。尝试按了下u，vim底下给出错误消息<code>u_undo: line numbers wrong</code>，应该某次历史出现了错误不能恢复。虽然用了git做版本控制，上次commit已经是刚创建这个wiki的时候了，帮不到我，提交的时候还是要勤奋点好。</p>
+<p>这下让我有点慌了，记得自己在.vimrc中有设置undofile</p>
+<pre><code>try
+    set undodir=~/.vim/undodir
+    set undofile
+catch
+</code></pre><p>我马上切换到~/.vim/undodir下，看到个1.7m大小的undo文件，心里放松了许多，顺手备份下来。接下来尝试创建新的文件来恢复备份也失败了，想想也是，怎么可能做得到</p>
+<p>在网上逛了逛，发现stackoverflow上有<a href="http://stackoverflow.com/questions/21385956/undo-recovery-from-swap-file-in-vim" target="_blank" rel="noopener">类似的提问</a></p>
+<p><code>:undolist</code>命令的确能看到历史，回答中提到的插件，我尝试了Gundo。在Vundle加入以下代码，然后安装插件</p>
+<pre><code>Bundle &apos;sjl/gundo.vim&apos;
+</code></pre><p><code>:GundoToggle</code>，打开预览历史视图，直接跳过错误找到了中午的记录，完成恢复，顺便commit了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在一次强制关机后，开机准备继续写wiki，然后竟然发现perl.md只剩下117行，突然感觉自己的汗毛都倒立了。尝试按了下u，vim底下给出错误消息&lt;code&gt;u_undo: line numbers wrong&lt;/code&gt;，应该某次历史出现了错误不能恢复。虽然用了git
+    
+    </summary>
+    
+    
+      <category term="vim" scheme="/tags/vim/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开始建立自己的wiki</title>
+    <link href="/2016/04/16/%E5%BC%80%E5%A7%8B%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84wiki/"/>
+    <id>/2016/04/16/开始建立自己的wiki/</id>
+    <published>2016-04-16T13:00:25.000Z</published>
+    <updated>2018-08-07T09:40:53.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>大概在一个月开始，发现自己整理知识的方法不大好，都是直接markdown写的。散乱，没什么统一的标准，想要查找一些知识点时也不是很方便。于是想着整理起学过的东西。</p>
+<p>方案上最后是选定了vimwiki，毕竟在vim中直接使用，而且也还一直有人在维护。一开始语法就不该使用vimwiki的，绕了好多的弯子，还是得在.vimrc里改成markdown。现在基本稳定下来，vim插件配合使用的<a href="https://github.com/iamcco/markdown-preview.vim" target="_blank" rel="noopener">markdown-preview</a>。不过还是有个缺点，vimwiki的语法文件貌似有问题，而md后缀的文件默认都是使用vimwiki的语法，头有点疼。在vim配置中设置绑定md到markdown语法还是不行，找时间处理一下吧</p>
+<p>现在正在完成的是Perl笔记的转移，因为我是从头到尾地敲，不想复制粘贴，顺便练习下打字，过程中也又学到不少东西。</p>
+<p>等到Perl的笔记弄好后，就要花点时间去将md转换成html，加上一些css和template，先让wiki上线，以后再继续来补充</p>
+<p>还有，最近才知道markdown中<code>&lt;br&gt;</code>可以做到随时换行，现在就能在列表中换行了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;大概在一个月开始，发现自己整理知识的方法不大好，都是直接markdown写的。散乱，没什么统一的标准，想要查找一些知识点时也不是很方便。于是想着整理起学过的东西。&lt;/p&gt;
+&lt;p&gt;方案上最后是选定了vimwiki，毕竟在vim中直接使用，而且也还一直有人在维护。一开始语法就不
+    
+    </summary>
+    
+    
+      <category term="wiki" scheme="/tags/wiki/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在archlinux上使用小鹤双拼音形</title>
+    <link href="/2016/04/11/archlinux%E4%B8%8A%E4%BD%BF%E7%94%A8%E5%B0%8F%E9%B9%A4%E5%8F%8C%E6%8B%BC%E9%9F%B3%E5%BD%A2/"/>
+    <id>/2016/04/11/archlinux上使用小鹤双拼音形/</id>
+    <published>2016-04-11T03:14:23.000Z</published>
+    <updated>2018-08-07T09:40:53.016Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是以前配置过的，不过近来写了些相应的脚本，也算是不太水的文章。同时也安利下<a href="http://www.flypy.com" target="_blank" rel="noopener">小鹤双拼</a>，能减少击键次数，提高打字速度</p>
+<p>首先从源里安装fcitx</p>
+<pre><code>sudo pacman -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-rime
+</code></pre><p>这如果想要有图形界面来设置fcitx，可以安装<strong>fcitx-configtool</strong>。<strong>fcitx-rime</strong>是中文输入法<a href="http://rime.im" target="_blank" rel="noopener">rime</a>的fcitx版本，需要设置的东西比较多，自定义当然就强。</p>
+<p>我使用的桌面管理器，并不是完善的环境，系统启用输入法需要在.xinitrc中加入以下环境变量</p>
+<pre><code>export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+</code></pre><p>然后在桌面的autostart中加入fcitx的启动，这样进入后就可以调出fcitx。若是其他完善的桌面环境配置起来会容易些，具体看<a href="https://wiki.archlinux.org/index.php/Fcitx_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">fcitx on archwiki</a>)</p>
+<p>下面对rime进行配置，顺便一提，fcitx的相关文件默认在<code>$HOME/.config/fcitx</code>中，rime的配置文件就在fcitx目录下的rime中。</p>
+<p>首先新建用户自己的配置文件<strong>default.custom.yaml</strong>，不建议直接修改在default.yaml上，因为版本升级会覆盖该文件，导致丢失配置</p>
+<pre><code>patch:
+  &quot;ascii_composer/good_old_caps_lock&quot;: true
+  key_binder:
+    Caps_Lock: noop
+    Control_L: clear        # 清空
+    Control_R: commit_text  # 提交
+    Shift_L: commit_code    # 提交输入码
+    Shift_R: inline_ascii
+  menu:
+    page_size: 2        # 候选词个数
+  schema_list:
+    - {schema: flypy}   # 输入方案选择，等下就会配置
+  &quot;switcher/hotkeys&quot;:
+    - &quot;Control+grave&quot;   # 菜单键，设置为ctrl+`(即是TAB上面的那个)
+</code></pre><p>然后我们新建输入方案，<strong>flypy.schema.yaml</strong></p>
+<pre><code># Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: flypy
+  name: 小鶴音形
+  version: &quot;1.2&quot;        # 自己定义的版本号
+
+switches:
+  - name: ascii_mode    # 上面提到的菜单键的菜单选项
+    reset: 1            # 预设值，默认为0，也就是下面的中文
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: ascii_punct
+    reset: 0
+    states: [ 中标, 英标 ]
+
+engine:                 # 使用一些输入法引擎
+  processors:
+  # 这里只使用了一些基本配置，[雪齋的文檔](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)详细介绍了这部分的内容
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: &apos;abcdefghjiklmnopqrstuvwxyz&apos;
+  delimiter: &quot;`&quot;
+  max_code_length: 4
+  auto_select: true         # 4字自动上屏
+
+translator:
+  dictionary: flypy
+  enable_charset_filter: true
+  enable_completion: false
+  enable_sentence: true
+  enable_user_dict: false
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  bindings:
+    - {accept: semicolon, send: 2, when: has_menu}      # 分号选择第二个选项
+
+recognizer:
+  import_preset: default
+</code></pre><p>再来看看flypy.dict.yaml的结构</p>
+<pre><code>----
+name : flypy
+version :  &quot;1.1&quot;
+sort : original         # 顺序不变
+use_preset_vocabulary : false   # 不引入「八股文」〔含字詞頻、詞庫〕
+...
+啊      a
+按      a
+阿      aa
+阿坝    aab
+。。。
+</code></pre><p>字库的获得一般在小鹤群，也可以从飞扬输入法中导出，由于词库也不是一直是固定的。<br>散步的鹤（也是就创造者）会不定时的更新词库。所以写了个难使的perl脚本来更新字典，前提是字典被放到了/tmp目录下了</p>
+<pre><code>#!/usr/bin/perl
+# 这脚本将下载下来飞扬码表转化成rime字典
+use warnings;
+use Data::Dumper;
+
+my $flypy_new = glob &apos;/tmp/飞扬码表*.txt&apos;;      # 字典文件
+my $flypy_ori = &apos;/home/fio/.config/fcitx/rime/flypy.dict.yaml&apos;;     # 当前配置文件路径
+
+sub sort_by_code {
+    my $codes = [];
+    for ($a, $b) {
+        /\t(\w+)$/;
+        push @$codes, $1;
+    }
+    $codes-&gt;[0] cmp $codes-&gt;[1];
+}
+
+rename $flypy_ori =&gt; $flypy_ori.&apos;.bak&apos;;     # 备份
+open ORI, &apos;&lt;&apos;, $flypy_new or die $@;
+my $dict = [];
+while (&lt;ORI&gt;) {
+    next if /#类/;
+    if (/^(.*?)#.*[^\d](\d+)/) {
+        push @$dict, [$1, $2];
+    }
+}
+close ORI;
+my @fina = map { $_-&gt;[0] }
+    sort { $b-&gt;[1] &lt;=&gt; $a-&gt;[1] } @$dict;
+
+@fina = sort sort_by_code @fina;
+my $fina = join &quot;\n&quot;, @fina;
+
+$/ = &apos;&apos;;
+my $prefix = &lt;DATA&gt;;
+open OUTP, &apos;&gt;&apos;, $flypy_ori or die $@;
+print OUTP $prefix;
+print OUTP $fina;
+close OUTP;
+
+exec &quot;vim $flypy_ori&quot;;  # 查看结果，更新版本号之类的
+
+__DATA__
+---
+name : flypy
+version :  &quot;1.1&quot;
+sort : original
+use_preset_vocabulary : false
+...
+</code></pre><p>最后记得要部署一下</p>
+<pre><code>rime_deployer --build [rime目录]
+</code></pre><p>使用小鹤双拼的时候偶尔会卡字，不清楚字是怎么拆分的，所以反查也是很重要的。<br>一开始没有注意到rime可以设置反查，就又手撸了脚本来查询，效果也不错，而且支持整句，合并了上面的代码</p>
+<pre><code>#!/usr/bin/perl
+
+use feature qw(say);
+use warnings;
+use Encode;
+
+my $flypy_ori = &apos;/home/fio/.config/fcitx/rime/flypy.dict.yaml&apos;;
+
+my $arg = $ARGV[0] or &amp;usage;
+if ($arg eq &apos;update&apos;) {
+    ## 更新码表
+    my $flypy_new = $ARGV[1] || glob &apos;/tmp/飞扬码表*.txt&apos;;
+
+    rename $flypy_ori =&gt; $flypy_ori.&apos;.bak&apos;;
+    open ORI, &apos;&lt;&apos;, $flypy_new or die $@;
+    my $dict = [];
+    while (&lt;ORI&gt;) {
+        next if /#类/;
+        if (/^(.*?)#.*[^\d](\d+)/) {
+            push @$dict, [$1, $2];
+        }
+    }
+    close ORI;
+    my @fina = map { $_-&gt;[0] }
+        sort { $b-&gt;[1] &lt;=&gt; $a-&gt;[1] } @$dict;
+
+    my $fina = join &quot;\n&quot;, sort sort_by_code @fina;
+
+    $/ = &apos;&apos;;
+    my $prefix = &lt;DATA&gt;;
+    open OUTP, &apos;&gt;&apos;, $flypy_ori or die $@;
+    print OUTP $prefix;
+    print OUTP $fina;
+    close OUTP;
+
+    exec &quot;vim $flypy_ori&quot;;
+} else {
+    $key = decode(&apos;utf-8&apos;, $ARGV[0]);
+    my @keys = map { encode(&apos;utf-8&apos;, $_) } split(//, $key);
+    my $hah = [];
+    my $dicts = {};
+    for my $i (0..$#keys) {
+        my $max = $i+3 &gt; $#keys ? $#keys : $i+3;
+        for my $j ($i..$#keys) {
+            push @$hah, join(&apos;&apos;, @keys[$i..$j]);
+        }
+    }
+    my $sed_string = join(&apos;,&apos;, @$hah) =~ s/([^\d]+?)(,|$)/\/^$1\\t\/p\n/gr;
+    open SED, &quot;sed -ne \&quot;$sed_string\&quot; $flypy_ori | uniq |&quot;;
+    while (&lt;SED&gt;) {
+        /^(.*)\t(.*)$/;
+        push @{$dicts-&gt;{$1}}, $2;
+    }
+    close SED;
+    for (@$hah) {
+        if ($dicts-&gt;{$_}) {
+            print &quot;└&quot; if length($_) &gt; 3;
+            print &quot;$_\t\t\t&quot;, join(&apos;, &apos;, @{$dicts-&gt;{$_}}), &quot;\n&quot;;
+        }
+    }
+}
+
+sub sort_by_code {
+    my $codes = [];
+    for ($a, $b) {
+        /\t(\w+)$/;
+        push @$codes, $1;
+    }
+    $codes-&gt;[0] cmp $codes-&gt;[1];
+}
+
+sub usage {
+    print &quot;Usage:
+    flypy update [newdict_path]
+    flypy keyword\n&quot;;
+    exit 0;
+}
+
+__DATA__
+---
+name : flypy
+version :  &quot;1.1&quot;
+sort : original
+use_preset_vocabulary : false
+...
+</code></pre><p>这就是脚本最后的形态了，又能查字又能更新</p>
+<pre><code>flypy 我想知道这是为什么
+---output---
+我                      w, wop, wopd
+想                      xl, xlmx
+知                      viu, viuk
+└知道                   vd
+道                      dc, dcz, dczz
+这                      v, vezw, vwz, vwzw
+└这是为什么             vuwm
+是                      u, uior
+为                      ww, wwdd
+└为什么                 wsm, wume
+什                      ufr, ufru, uiru
+└什么                   sm, ufme
+么                      me, mep, meps, mop, mops
+</code></pre><p>最后，也是希望自己将能做到的麻烦事都转化成或多或少的脚本</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是以前配置过的，不过近来写了些相应的脚本，也算是不太水的文章。同时也安利下&lt;a href=&quot;http://www.flypy.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;小鹤双拼&lt;/a&gt;，能减少击键次数，提高打字速度&lt;/p&gt;
+&lt;p&gt;首先从源里安
+    
+    </summary>
+    
+    
+      <category term="archlinux" scheme="/tags/archlinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>恢复Archlinux的boot分区</title>
+    <link href="/2016/01/15/%E6%81%A2%E5%A4%8DArchlinux%E7%9A%84boot%E5%88%86%E5%8C%BA/"/>
+    <id>/2016/01/15/恢复Archlinux的boot分区/</id>
+    <published>2016-01-15T13:50:55.000Z</published>
+    <updated>2018-08-07T09:40:53.015Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果平时有备份boot分区的习惯，在发生什么意外的时候能够及时恢复，但由于arch的滚动升级，内核的更新往往很快，而碰巧备份文件里内核映象低于目前系统的版本，直接使用备份可能会出现问题。</p>
+<p>在boot分区已经损坏的情况下，不能进入系统，我们只能借助于liveCD的帮助。在电脑上做好一个arch的usb，我们将用它来启动系统。</p>
+<pre><code>$ lsblk 
+sda      8:0    0 931.5G  0 disk 
++-sda1   8:1    0   268M  0 part /boot
++-sda6   8:6    0    20G  0 part /
++-sda7   8:7    0    15G  0 part /var
++-sda8   8:8    0    25G  0 part /home
+
+mount /dev/sda6 /mnt
+mount /dev/sda1 /mnt/boot
+mount /dev/sda7 /mnt/var
+mount /dev/sda8 /mnt/home
+arch-chroot /mnt /bin/bash
+</code></pre><p>我们在live上面挂载好分区，然后chroot进去，之后就如同我们操作平时的电脑一样。现在只要恢复备份，然后创建当前系统内核的映象就行了。高端的可以自己生成，参考<a href="https://wiki.archlinux.org/index.php/Mkinitcpio" target="_blank" rel="noopener">ArchWiki mkinitcpio</a>，但我比较懒就一条命令解决了<code>sudo pacman -S linux</code>，会重新安装然后再自动生成。如果现在发现没有网络，可以<code>exit</code>，配置好网络再<code>chroot</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果平时有备份boot分区的习惯，在发生什么意外的时候能够及时恢复，但由于arch的滚动升级，内核的更新往往很快，而碰巧备份文件里内核映象低于目前系统的版本，直接使用备份可能会出现问题。&lt;/p&gt;
+&lt;p&gt;在boot分区已经损坏的情况下，不能进入系统，我们只能借助于liveCD
+    
+    </summary>
+    
+    
+      <category term="archlinux" scheme="/tags/archlinux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World!</title>
+    <link href="/2015/10/11/Hello-World/"/>
+    <id>/2015/10/11/Hello-World/</id>
+    <published>2015-10-11T12:43:15.000Z</published>
+    <updated>2018-08-07T09:40:53.015Z</updated>
+    
+    <content type="html"><![CDATA[<p>荒颓了较长的一段时间，决定跟自己好好谈一下。并不是能改变自己的情绪或是一些看法，目下无尘的感觉不算太差，只是比较容易弄坏自己</p>
+<p>已经很长的一段，我的时间记录不准，自己也懒得去好好地校正，同时也有包括我的日记。上次满心是话地打开日记本，到笔尖上还是顿生厌恶感，草草写了三两行。而且还有混乱的作息，最近习惯起了睡在傍晚，大概3点左右，然后67点再爬起来，晚上又是1点后睡，却迟迟睡不着。呵，我早就发现自己已经是别人眼里的奇葩了</p>
+<p>其实改变不改变对现在的自己意义也不大，是觉得放到以后会被埋怨，这段日子肯定会有一天会结束，或不小心被终结。</p>
+<p>日记真的是关键，若能好好写的话也许会有很大的改善。所以封存了旧的日记本，换成一本全白的本子，不想受线条控制的，随心所欲地记录好生活</p>
+<p>利索起来</p>
+<p>print “Hello World\n”;</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;荒颓了较长的一段时间，决定跟自己好好谈一下。并不是能改变自己的情绪或是一些看法，目下无尘的感觉不算太差，只是比较容易弄坏自己&lt;/p&gt;
+&lt;p&gt;已经很长的一段，我的时间记录不准，自己也懒得去好好地校正，同时也有包括我的日记。上次满心是话地打开日记本，到笔尖上还是顿生厌恶感，草草
+    
+    </summary>
+    
+    
+      <category term="life" scheme="/tags/life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在archlinux下搭建lnmp环境</title>
+    <link href="/2015/09/18/%E5%9C%A8archlinux%E4%B8%8B%E6%90%AD%E5%BB%BAlnmp%E7%8E%AF%E5%A2%83/"/>
+    <id>/2015/09/18/在archlinux下搭建lnmp环境/</id>
+    <published>2015-09-18T15:21:31.000Z</published>
+    <updated>2018-08-07T09:40:53.014Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要根据<a href="http://zyan.cc" target="_blank" rel="noopener">张宴的BLOG</a>，我在centos虚拟机搭建成功后，想想也在archlinux练练，把搭建的笔记整理了一下。</p>
+<p>这里lnmp是linux+nginx+mariadb+PHP，目前截止使用的软件都是最新的，archlinux也是保持滚动到最新</p>
+<p>1.从源里直接安装一些软件</p>
+<pre><code>$ sudo -s
+# pacman -S --noconfirm gcc autoconf libjpeg libpng freetype libxml2 zlib glibc glib2 bzip2 ncurses curl e2fsprogs krb5 libidn openssl pcre mhash openldap nss_ldap libmcrypt mariadb
+</code></pre><p>这里<code>mariadb</code>数据库直接用源里的了</p>
+<pre><code># mkdir -p /data0/soft
+# cd /data0/soft
+# wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+# wget http://nginx.org/download/nginx-1.8.0.tar.gz
+# wget &quot;http://downloads.sourceforge.net/mcrypt/mcrypt-2.6.8.tar.gz?modtime=1194463373&amp;big_mirror=0&quot;
+# wget http://cn2.php.net/get/php-5.6.13.tar.gz/from/this/mirror
+# wget http://pecl.php.net/get/memcache-2.2.7.tgz
+</code></pre><p>2.接下来就开始编译PHP的支持库</p>
+<pre><code># tar zxvf libiconv[TAB]
+# cd libiconv[TAB]
+# ./configure --prefix=/usr/local
+# make
+# make install
+# cd ..
+
+# tar zxvf mcrypt[TAB]
+# cd mcrypt[TAB]
+# /sbin/ldconfig
+# ./configure
+# make
+# make install
+# cd ..
+</code></pre><p><code>mcrypt</code>的编译有问题的，看下<code>/usr/lib/</code>中有没有libmhash和libmcrypt的库文件。</p>
+<p>3.配置mariadb</p>
+<p>创建mariadb的用户和数据库目录</p>
+<pre><code># groupadd mysql
+# useradd -g mysql mysql
+# mkdir -p /data0/data/mysql
+# mkdir -p /data0/logs/mysql
+# mkdir /data0/etc
+</code></pre><p>创建数据表和配置文件</p>
+<pre><code># mysql_install_db --user=mysql --basedir=/usr --datadir=/data0/data/mysql
+# vim /data0/etc/my.cnf
+</code></pre><p>my.cnf配置文件</p>
+<pre><code>[client]
+character-set-server=utf8
+port=3306
+socket=/run/mysqld/mysqld.sock
+
+[mysqld]
+character-set-server=utf8
+user=mysql
+port=3306
+socket=/run/mysqld/mysqld.sock
+basedir=/usr
+datadir=/data0/data/mysql
+log-error=/data0/logs/mysql/err.log
+pid-file=/data0/data/mysql/mysql.pid
+open_files_limit=8192
+back_log=600
+max_connections=5000
+max_connect_errors=6000
+table-cache=4096
+external-locking=FALSE
+max_allowed_packet=32M
+sort_buffer_size=1M
+join_buffer_size=1M
+thread_cache_size=256
+#thread_concurrency=8
+query_cache_size=512M
+query_cache_limit=2M
+query_cache_min_res_unit=2K
+default_storage_engine=MyISAM
+thread_stack=192k
+transaction_isolation=READ-COMMITTED
+tmp_table_size=246M
+max_heap_table_size=246M
+long_query_time=3
+log_slave_updates
+log-bin=/data0/logs/mysql/binlog
+binlog_cache_size=4M
+binlog_format=MIXED
+#log
+#log_warngins
+max_binlog_size=1G
+relay-log-index=/data0/logs/mysql/relaylog
+relay-log-info-file=/data0/logs/mysql/relaylog
+relay-log=/data0/log/mysqlrelaylog
+expire_logs_days=30
+key_buffer_size=256M
+read_buffer_size=1M
+read_rnd_buffer_size=16M
+bulk_insert_buffer_size=64M
+myisam_sort_buffer_size=128M
+myisam_max_sort_file_size=10G
+myisam_repair_threads=1
+myisam_recover
+
+interactive_timeout=120
+wait_timeout=120
+
+skip-name-resolve
+#master-connect-retry=10
+slave-skip-errors=1032,1062,126,1114,1146,1048,1396
+
+#master-host=192.168.1.2
+#master-user=username
+#master-password=password
+#master-port=3306
+
+server-id=1
+
+innodb_additional_mem_pool_size=16M
+innodb_buffer_pool_size=512M
+innodb_data_file_path=ibdata1:512M:autoextend
+innodb_file_io_threads=4
+innodb_thread_concurrency=8
+innodb_flush_log_at_trx_commit=2
+innodb_log_buffer_size=16M
+innodb_log_file_size=128M
+innodb_log_files_in_group=3
+innodb_max_dirty_pages_pct=90
+innodb_lock_wait_timeout=120
+innodb_file_per_table=0
+
+#log-slow-queries=/data0/logs/mysql/slow.log
+#long_query_time=10
+
+[mysqldump]
+quick
+max_allowed_packet=32M
+</code></pre><p>创建管理mariadb数据库的shell脚本</p>
+<pre><code># mkdir -p /data0/bin
+# vim /data0/bin/mysql
+
+#!/bin/sh
+mysql_username=&quot;admin&quot;
+mysql_password=&quot;nimda&quot;          //账号等下再添加
+mysql_port=3306
+
+function_start_mysql()
+{
+    printf &quot;Starting MySQL...&quot;
+    /bin/sh /usr/bin/mysqld_safe --defaults-file=/data0/etc/my.cnf 2&gt;&amp;1 &gt;/dev/null &amp;
+    printf &quot;Done!\n&quot;
+}
+
+function_stop_mysql()
+{
+    printf &quot;Stoping MySQL...&quot;
+    /usr/bin/mysqladmin -u ${mysql_username} -p${mysql_password} -S /run/mysqld/mysqld.sock shutdown
+    printf &quot;Done!\n&quot;
+}
+
+function_restart_mysql()
+{
+    printf &quot;Restarting MySQL...&quot;
+    function_stop_mysql
+    sleep 5
+    function_start_mysql
+    printf &quot;Done!\n&quot;
+}
+
+function_kill_mysql()
+{
+    printf &quot;Killing MySQL...&quot;
+    kill -9 $(ps -ef | grep &apos;bin/mysqld&apos; | grep ${mysql_port} | awk &apos;{printf $3 &quot; &quot; $2}&apos;)
+    printf &quot;Done!\n&quot;
+}
+
+if [ &quot;$1&quot; = &quot;start&quot; ]; then
+    function_start_mysql
+elif [ &quot;$1&quot; = &quot;stop&quot; ]; then
+    function_stop_mysql
+elif [ &quot;$1&quot; = &quot;restart&quot; ]; then
+    function_start_mysql
+elif [ &quot;$1&quot; = &quot;kill&quot; ]; then
+    function_kill_mysql
+else
+    printf &quot; Usage: /data0/bin/mysql {start|stop|restart|kill}\n&quot;
+fi
+</code></pre><p>设置好权限</p>
+<pre><code># chmod +x /data0/bin/mysql
+# chown -R mysql:mysql /data0/data/mysql
+</code></pre><p>启动，确认没什么错误</p>
+<pre><code># /data0/bin/mysql start
+# cat /data0/logs/mysql/err.log
+</code></pre><p>连接数据库，提示password直接回车</p>
+<pre><code># mysql -u root -p
+</code></pre><p>输入SQL语句，创建刚才脚本中设置的admin用户</p>
+<pre><code>&gt; GRANT ALL PRIVILEGES ON *.* TO &apos;admin&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;nimda&apos;;
+&gt; GRANT ALL PRIVILEGES ON *.* TO &apos;admin&apos;@&apos;127.0.0.1&apos; IDENTIFIED BY &apos;nimda&apos;;
+</code></pre><p>停止MySQL</p>
+<pre><code># /data0/bin/mysql stop         //没有错误说明用户设置成功了
+</code></pre><p>4.编译安装PHP</p>
+<pre><code># tar zxvf php[TAB]
+# cd php[TAB]
+# ./configure 
+    --prefix=/usr --with-config-file-path=/data0/etc 
+    --with-mysql=/usr --with-mysqli=/usr/bin/mysql_config 
+    --with-iconv-dir=/usr/local --with-freetype-dir 
+    --with-jpeg-dir --with-png-dir 
+    --with-zlib --with-libxml-dir=/usr 
+    --enable-xml --disable-rpath 
+    --enable-bcmath --enable-shmop 
+    --enable-sysvsem --enable-inline-optimization 
+    --with-curl --enable-mbregex 
+    --enable-fpm --enable-mbstring 
+    --with-mcrypt --with-gd --enable-gd-native-ttf 
+    --with-openssl --with-mhash 
+    --enable-pcntl --enable-sockets 
+    --with-ldap --with-ldap-sasl 
+    --with-xmlrpc --enable-zip 
+    --enable-soap --enable-opcache 
+    --with-pdo-mysql --enable-maintainer-zts
+# make ZEND_EXTRA_LIBS=&apos;-liconv&apos;
+# make install
+# cp php.ini-development /data0/etc/php.ini
+# cd ..
+</code></pre><p>编译memcache扩展模块</p>
+<pre><code># tar zxvf memcache[TAB]
+# cd memcache[TAB]
+# /usr/bin/phpize
+# ./configure   //我这里可以直接发现php-config，其他路径需加上--with-php-config=/path/to/php-config
+# make
+# make install
+</code></pre><p>修改php.ini文件</p>
+<p>查找/data0/etc/php.ini中的extension_dir=”./“，修改为</p>
+<pre><code>extension_dir=&quot;/usr/lib/php/extensions/no-debug-zts-20131226/&quot;
+</code></pre><p>再其后一行添加</p>
+<pre><code>extension=&quot;memcache.so&quot;
+</code></pre><p>PHP现在已经不用eaccelerator来加速，而是使用内置的opcache，这里在php.ini中搜索opcache，直接修改相应的配置就行，这里我设置成这样</p>
+<pre><code>[opcache]
+
+zend_extension=&quot;/usr/lib/php/extensions/no-debug-zts-20131226/opcache.so&quot;
+
+; Determines if Zend OPCache is enabled
+opcache.enable=1
+
+; Determines if Zend OPCache is enabled for the CLI version of PHP
+opcache.enable_cli=1
+
+; The OPcache shared memory storage size.
+opcache.memory_consumption=128
+
+; The amount of memory for interned strings in Mbytes.
+opcache.interned_strings_buffer=8
+
+; The maximum number of keys (scripts) in the OPcache hash table.
+; Only numbers between 200 and 100000 are allowed.
+opcache.max_accelerated_files=4000
+
+; How often (in seconds) to check file timestamps for changes to the shared
+; memory storage allocation. (&quot;1&quot; means validate once per second, but only
+; once per request. &quot;0&quot; means always validate)
+opcache.revalidate_freq=60
+
+; If enabled, a fast shutdown sequence is used for the accelerated code
+opcache.fast_shutdown=1
+</code></pre><p>创建www用户和组</p>
+<pre><code># mkdir /data0/www
+# groupadd www
+# useradd -g www www
+# chown -R www:www /data0/www
+</code></pre><p>配置php-fpm.conf文件（可以平滑变更php.ini而不用重启cgi)，参照了张宴的设置</p>
+<pre><code># vim /usr/etc/php-fpm.conf
+
+[global]
+pid = /data0/logs/php-fpm/php-fpm.pid
+error_log = /data0/logs/php-fpm/err.log
+log_level = notice
+emergency_restart_threshold = 10
+emergency_restart_interval = 1m
+process_control_timeout = 5s
+daemonize = yes
+
+[www]
+user = www
+group = www
+listen = 127.0.0.1:9000
+listen.backlog = 65535
+listen.mode = 0660
+listen.allowed_clients = 127.0.0.1
+pm = dynamic
+pm.max_children = 128
+pm.start_servers = 20
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+pm.max_requests = 1024
+slowlog = log/$pool.log.slow
+request_slowlog_timeout = 0s
+request_terminate_timeout = 0
+rlimit_files = 65535
+rlimit_core = 0
+catch_workers_output = yes
+env[HOSTNAME] = $HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+</code></pre><p>尝试启动php-fpm</p>
+<pre><code># ulimit -SHn 65535
+# php-fpm
+</code></pre><p>5.安装Nginx</p>
+<pre><code># mkdir /data0/etc/nginx
+# mkdir /data0/logs/nginx
+# mkdir -p /data0/tmp/nginx
+# tar zxvf nginx[TAB]
+# cd nginx[TAB]
+# ./configure 
+    --prefix=/usr --conf-path=/data0/etc/nginx/nginx.conf 
+    --error-log-path=/data0/logs/nginx/err.log --http-log-path=/data0/logs/nginx/access.log 
+    --pid-path=/data0/logs/nginx/nginx.pid --lock-path=/tmp/nginx.lock 
+    --user=www --group=www 
+    --with-ipv6 --with-http_ssl_module 
+    --with-http_spdy_module --with-http_gzip_static_module 
+    --with-http_stub_status_module --http-client-body-temp-path=/data0/tmp/nginx/client_body 
+    --http-proxy-temp-path=/data0/tmp/nginx/proxy --http-fastcgi-temp-path=/data0/tmp/nginx/fastcgi 
+    --http-uwsgi-temp-path=/data0/tmp/nginx/uwsgi --http-scgi-temp-path=/data0/tmp/nginx/scgi
+# make &amp; make install
+# cd ..
+</code></pre><p>加了一些没用到的参数，但我相信以后可以用到</p>
+<p>如果nginx已经安装了，就不要make install，执行下面语句升级，配置文件也不会丢失</p>
+<pre><code># rm -rf /usr/sbin/nginx
+# cp objs/nginx /usr/sbin/nginx
+# make upgrade
+</code></pre><p>配置目录权限</p>
+<pre><code># chmod +w /data0/logs/nginx
+# chown -R www:www /data0/logs/nginx
+# chown -R www:www /data0/tmp/nginx
+</code></pre><p>修改配置文件nginx.conf</p>
+<pre><code># vim /data0/etc/nginx/nginx.conf
+
+user    www www;
+worker_processes  8;
+
+error_log   /data0/logs/nginx/err.log   crit;
+worker_rlimit_nofile    65535;
+
+events {
+    use     epoll;
+    worker_connections  65535;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+    access_log /data0/logs/nginx/access.log  main;
+
+    server_names_hash_bucket_size    128;
+    client_header_buffer_size   32k;
+    large_client_header_buffers     4 32k;
+    client_max_body_size    8m;
+
+    sendfile        on;
+    tcp_nopush     on;
+
+    keepalive_timeout  60;
+
+    tcp_nodelay on;
+
+    fastcgi_connect_timeout 300;
+    fastcgi_send_timeout    300;
+    fastcgi_read_timeout    300;
+    fastcgi_buffer_size     64k;
+    fastcgi_buffers     4   64k;
+    fastcgi_busy_buffers_size   128k;
+    fastcgi_temp_file_write_size    128k;
+
+    gzip  on;
+    gzip_min_length     1k;
+    gzip_buffers    4   16k;
+    gzip_http_version   1.0;
+    gzip_comp_level     2;
+    gzip_types      text/plain application/x-javascript text/css application/xml;
+    gzip_vary       on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+        index index.html index.htm index.php;
+        root /data0/www;
+
+        #error_page  404              /404.html;
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ .*\.(php|php5)?$ {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+            expires 30d;
+        }
+
+        location ~ .*\.(js|css)?$ {
+            expires 1h;
+        }
+
+        location /status/ {
+            stub_status on;
+            access_log  off;
+        }
+    }
+}
+</code></pre><p>最后启动nginx</p>
+<pre><code># ulimit -SHn 65535
+# nginx
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要根据&lt;a href=&quot;http://zyan.cc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;张宴的BLOG&lt;/a&gt;，我在centos虚拟机搭建成功后，想想也在archlinux练练，把搭建的笔记整理了一下。&lt;/p&gt;
+&lt;p&gt;这里lnmp是lin
+    
+    </summary>
+    
+    
+      <category term="archlinux" scheme="/tags/archlinux/"/>
+    
+      <category term="webserver" scheme="/tags/webserver/"/>
+    
+  </entry>
+  
+</feed>

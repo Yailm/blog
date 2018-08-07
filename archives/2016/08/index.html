@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>归档：2016 年 8 月 | Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><div class="archive-title"><strong>归档 2016 年 8 月</strong></div><article><header><h2><a href="/blog/2016/08/30/opencv中摄像头图像的“实时”获取/">opencv中摄像头图像的“实时”获取</a></h2></header><div class="article-meta clearfix"><time class="left">2016-08-30</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/opencv-python/">opencv python</a></li></ul></div><div class="markdown-body"><p>这段时间要做项目学习了下opencv，准备通过摄像头来捕捉人体。心里有个疑问，对于从摄像头获取的图像，如果对图像的分析处理时间很长，那么下一次再从摄像头获取的图像是什么时候的呢？有两个选项，一个是紧临上一次的图像，或者是处理结束后即时获取的图像。正好准备解决这个问题，写了代码来验证一下</p>
+<pre><code>import cv2
+import time
+
+cap = cv2.VideoCapture(0)
+for i in range(15):
+    ret, image = cap.read()
+    cv2.imwrite(&apos;/tmp/image%02d.jpg&apos; % i, image)
+    print(&quot;get&quot;, i+1)
+    time.sleep(3)   # 代替耗时的操作
+cap.release()
+</code></pre><p>那，这个程序怎么验证呢？用手机开个秒表，计时并放在摄像头前面，之后所有的图片得到这样的结果</p>
+<p>01.78s（手机移动到摄像头花了点时间）<br>01.81s<br>01.85s<br>01.87s<br>01.92s<br>04.83s<br>07.84s<br>….大概后面都能以约3秒的间隔<br>最后是31.95s，而我一结束就马上关闭了秒表，停留在48.35s</p>
+<p>出现这样的结果，能马上想到获取的图像其实是有缓冲区的，大小为5张图片的样子，而其后能保持间隔，不正是生产者消费者的问题吗？</p>
+<p>假设摄像头以每秒30帧获取图像的话，那么程序就是每3秒才取走一张图片，进而促使摄像头继续获取图像。不难解释后面31.95和45.35s<br>此时应该是31.95的图片在缓冲区的底端，类似这样</p>
+<p>44.10<br>41.05<br>38.01<br>34.98<br>31.95</p>
+<p>当31.95被取出的时候，(44.10+3s)才进入缓冲区，这才是当时真正的时间</p>
+<p>所以，当我们调用摄像头并对图像使用耗时的操作时，是没有做到实时的。可以事先计算图像操作的耗时（一般都会比读取的时间多），只要知道它大于读取耗费的时间，那么我们就能知道这样一个结论：<code>当我们获取的图像的时候，缓冲区都是满的</code>，而且是以前的图像，真正想要的在缓冲区外面，所以只要读取并舍弃这些图像</p>
+<pre><code>for x in range(5): cap.read()
+</code></pre><p>这样，摄像头就能称得上是实时的了</p>
+</div></article><article><header><h2><a href="/blog/2016/08/04/archlinuxarm上配置使用AUR/">archlinuxarm上配置使用AUR</a></h2></header><div class="article-meta clearfix"><time class="left">2016-08-04</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li></ul></div><div class="markdown-body"><p>在树莓派上安装了个archlinuxarm，习惯性想使用AUR里的软件，配置起来有点麻烦就记录一下</p>
+<p>首先如通常一样，编辑/etc/pacman.conf文件添加新的archlinuxcn源</p>
+<pre><code>vi /etc/pacman.conf
+
+# 在最后面追加以下内容
+[archlinuxcn]
+SigLevel=Never
+Server=http://repo.archlinuxcn.org/any
+</code></pre><p>正常情况下，地址是<code>http://repo.archlinuxcn.org/$arch</code>，由于是arm版本，在浏览器中打开<a href="http://repo.archlinuxcn.org" target="_blank" rel="noopener">http://repo.archlinuxcn.org</a> ，发现里面是没有arm之类的目录的。所以如果使用<code>$arch</code>的话，你就会得到个’failed retrieving file ‘archlinuxcn.db’ ….’的提示，并不是网络不好，404表明没有个这文件</p>
+<p>之后，在更新源后直接安装yaourt会提示要package-query&gt;=1.8，但package-query不是在AUR里吗？只能手动下载这个包离线安装</p>
+<pre><code>wget https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz
+tar -xvf package-query.tar.gz
+</code></pre><p>注意有些依赖</p>
+<pre><code>sudo pacman -S gcc yaji make fakeroot pkg-config
+makepkg -i
+</code></pre><p>最后就能直接安装yaourt了</p>
+<pre><code>sudo pacman -S yaourt
+</code></pre></div></article><article><header><h2><a href="/blog/2016/08/02/linux下使用adbyby清除广告/">linux下使用adbyby清除广告</a></h2></header><div class="article-meta clearfix"><time class="left">2016-08-02</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li></ul></div><div class="markdown-body"><p><a href="http://www.adbyby.com/" target="_blank" rel="noopener">adbyby</a>是一款跨平台的专业去广告软件，虽然提供的linux比较简陋，但也保持了它优秀的性能（不卡网，过滤强劲）。虽然现在浏览器的插件已经包揽了去广告的市场，但是在使用其他的软件就不能获得过滤（比如我使用的goldendic电子词典时，载入网络查词时也加载广告，占用了许多时间）</p>
+<p>要安装adbyby，官网提供了64位和86位，我这里是64位系统（话说32位也。。），顺便解压一下</p>
+<pre><code>wget http://update.adbyby.com/download/linux.64.tar.gz
+tar -xvf linux.64.tar.gz
+</code></pre><p>得到一个bin文件夹，里面就有我们想要的可执行文件了，直接执行<code>./adbyby &amp;</code>就在本机的8118端口开启过滤了。但真正安定下来还需要做几件事</p>
+<ul>
+<li><p>代理的设置</p>
+<ul>
+<li><p>设置系统代理，在.bashrc中追加</p>
+<pre><code>export http_proxy=http://127.0.0.1:8118/
+export https_proxy=$http_proxy
+</code></pre><p>只要软件使用了系统代理，通过的数据就会被过滤。但也有的软件会<code>direct link</code>，但也提供系统代理（如chrome、goldendict），需要自己到高级设置里去找</p>
+</li>
+<li><p>chromium系的浏览器推荐使用<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en-US" target="_blank" rel="noopener">SwitchyOmega</a>，好用是有道理的，如果只想在浏览器里使用的话，新建个配置adbyby，设定到本机的8118端口即可</p>
+</li>
+</ul>
+</li>
+<li><p>adbyby的自启动</p>
+<p>adbyby有专门的配置文件adhook.ini，也提供了<a href="http://www.adbyby.com/setup.htm" target="_blank" rel="noopener">配置说明</a>，但没有在默认adhook.ini出现的选项都是无效的，而且已经不用再设置了</p>
+<p>一般方便管理软件的启动我倾向于写成system unit，在<code>/usr/lib/systemd/system/</code>下创建文件adbyby.service，内容如下</p>
+<pre><code>#systemd service configuration file for adbyby
+
+[Unit]
+Description=Adbyby
+After=network.target
+
+[Service]
+User=fio
+Type=simple
+ExecStart=/path/to/adbyby binary
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>然后设置成开机启动项</p>
+<pre><code>systemctl daemon-reload
+systemctl start adbyby.service    # 启动adbyby服务
+systemctl enable adbyby.service   # 设置成自启动
+</code></pre></li>
+</ul>
+</div></article><div class="archive-pagination"><div class="paginator"><span class="page-number current">1</span></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

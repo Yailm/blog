@@ -1,0 +1,287 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><article><header><h2><a href="/blog/2016/04/16/开始建立自己的wiki/">开始建立自己的wiki</a></h2></header><div class="article-meta clearfix"><time class="left">2016-04-16</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="markdown-body"><p>大概在一个月开始，发现自己整理知识的方法不大好，都是直接markdown写的。散乱，没什么统一的标准，想要查找一些知识点时也不是很方便。于是想着整理起学过的东西。</p>
+<p>方案上最后是选定了vimwiki，毕竟在vim中直接使用，而且也还一直有人在维护。一开始语法就不该使用vimwiki的，绕了好多的弯子，还是得在.vimrc里改成markdown。现在基本稳定下来，vim插件配合使用的<a href="https://github.com/iamcco/markdown-preview.vim" target="_blank" rel="noopener">markdown-preview</a>。不过还是有个缺点，vimwiki的语法文件貌似有问题，而md后缀的文件默认都是使用vimwiki的语法，头有点疼。在vim配置中设置绑定md到markdown语法还是不行，找时间处理一下吧</p>
+<p>现在正在完成的是Perl笔记的转移，因为我是从头到尾地敲，不想复制粘贴，顺便练习下打字，过程中也又学到不少东西。</p>
+<p>等到Perl的笔记弄好后，就要花点时间去将md转换成html，加上一些css和template，先让wiki上线，以后再继续来补充</p>
+<p>还有，最近才知道markdown中<code>&lt;br&gt;</code>可以做到随时换行，现在就能在列表中换行了</p>
+</div></article><article><header><h2><a href="/blog/2016/04/11/archlinux上使用小鹤双拼音形/">在archlinux上使用小鹤双拼音形</a></h2></header><div class="article-meta clearfix"><time class="left">2016-04-11</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li></ul></div><div class="markdown-body"><p>这是以前配置过的，不过近来写了些相应的脚本，也算是不太水的文章。同时也安利下<a href="http://www.flypy.com" target="_blank" rel="noopener">小鹤双拼</a>，能减少击键次数，提高打字速度</p>
+<p>首先从源里安装fcitx</p>
+<pre><code>sudo pacman -S fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-rime
+</code></pre><p>这如果想要有图形界面来设置fcitx，可以安装<strong>fcitx-configtool</strong>。<strong>fcitx-rime</strong>是中文输入法<a href="http://rime.im" target="_blank" rel="noopener">rime</a>的fcitx版本，需要设置的东西比较多，自定义当然就强。</p>
+<p>我使用的桌面管理器，并不是完善的环境，系统启用输入法需要在.xinitrc中加入以下环境变量</p>
+<pre><code>export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+</code></pre><p>然后在桌面的autostart中加入fcitx的启动，这样进入后就可以调出fcitx。若是其他完善的桌面环境配置起来会容易些，具体看<a href="https://wiki.archlinux.org/index.php/Fcitx_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">fcitx on archwiki</a>)</p>
+<p>下面对rime进行配置，顺便一提，fcitx的相关文件默认在<code>$HOME/.config/fcitx</code>中，rime的配置文件就在fcitx目录下的rime中。</p>
+<p>首先新建用户自己的配置文件<strong>default.custom.yaml</strong>，不建议直接修改在default.yaml上，因为版本升级会覆盖该文件，导致丢失配置</p>
+<pre><code>patch:
+  &quot;ascii_composer/good_old_caps_lock&quot;: true
+  key_binder:
+    Caps_Lock: noop
+    Control_L: clear        # 清空
+    Control_R: commit_text  # 提交
+    Shift_L: commit_code    # 提交输入码
+    Shift_R: inline_ascii
+  menu:
+    page_size: 2        # 候选词个数
+  schema_list:
+    - {schema: flypy}   # 输入方案选择，等下就会配置
+  &quot;switcher/hotkeys&quot;:
+    - &quot;Control+grave&quot;   # 菜单键，设置为ctrl+`(即是TAB上面的那个)
+</code></pre><p>然后我们新建输入方案，<strong>flypy.schema.yaml</strong></p>
+<pre><code># Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: flypy
+  name: 小鶴音形
+  version: &quot;1.2&quot;        # 自己定义的版本号
+
+switches:
+  - name: ascii_mode    # 上面提到的菜单键的菜单选项
+    reset: 1            # 预设值，默认为0，也就是下面的中文
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: ascii_punct
+    reset: 0
+    states: [ 中标, 英标 ]
+
+engine:                 # 使用一些输入法引擎
+  processors:
+  # 这里只使用了一些基本配置，[雪齋的文檔](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)详细介绍了这部分的内容
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: &apos;abcdefghjiklmnopqrstuvwxyz&apos;
+  delimiter: &quot;`&quot;
+  max_code_length: 4
+  auto_select: true         # 4字自动上屏
+
+translator:
+  dictionary: flypy
+  enable_charset_filter: true
+  enable_completion: false
+  enable_sentence: true
+  enable_user_dict: false
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  bindings:
+    - {accept: semicolon, send: 2, when: has_menu}      # 分号选择第二个选项
+
+recognizer:
+  import_preset: default
+</code></pre><p>再来看看flypy.dict.yaml的结构</p>
+<pre><code>----
+name : flypy
+version :  &quot;1.1&quot;
+sort : original         # 顺序不变
+use_preset_vocabulary : false   # 不引入「八股文」〔含字詞頻、詞庫〕
+...
+啊      a
+按      a
+阿      aa
+阿坝    aab
+。。。
+</code></pre><p>字库的获得一般在小鹤群，也可以从飞扬输入法中导出，由于词库也不是一直是固定的。<br>散步的鹤（也是就创造者）会不定时的更新词库。所以写了个难使的perl脚本来更新字典，前提是字典被放到了/tmp目录下了</p>
+<pre><code>#!/usr/bin/perl
+# 这脚本将下载下来飞扬码表转化成rime字典
+use warnings;
+use Data::Dumper;
+
+my $flypy_new = glob &apos;/tmp/飞扬码表*.txt&apos;;      # 字典文件
+my $flypy_ori = &apos;/home/fio/.config/fcitx/rime/flypy.dict.yaml&apos;;     # 当前配置文件路径
+
+sub sort_by_code {
+    my $codes = [];
+    for ($a, $b) {
+        /\t(\w+)$/;
+        push @$codes, $1;
+    }
+    $codes-&gt;[0] cmp $codes-&gt;[1];
+}
+
+rename $flypy_ori =&gt; $flypy_ori.&apos;.bak&apos;;     # 备份
+open ORI, &apos;&lt;&apos;, $flypy_new or die $@;
+my $dict = [];
+while (&lt;ORI&gt;) {
+    next if /#类/;
+    if (/^(.*?)#.*[^\d](\d+)/) {
+        push @$dict, [$1, $2];
+    }
+}
+close ORI;
+my @fina = map { $_-&gt;[0] }
+    sort { $b-&gt;[1] &lt;=&gt; $a-&gt;[1] } @$dict;
+
+@fina = sort sort_by_code @fina;
+my $fina = join &quot;\n&quot;, @fina;
+
+$/ = &apos;&apos;;
+my $prefix = &lt;DATA&gt;;
+open OUTP, &apos;&gt;&apos;, $flypy_ori or die $@;
+print OUTP $prefix;
+print OUTP $fina;
+close OUTP;
+
+exec &quot;vim $flypy_ori&quot;;  # 查看结果，更新版本号之类的
+
+__DATA__
+---
+name : flypy
+version :  &quot;1.1&quot;
+sort : original
+use_preset_vocabulary : false
+...
+</code></pre><p>最后记得要部署一下</p>
+<pre><code>rime_deployer --build [rime目录]
+</code></pre><p>使用小鹤双拼的时候偶尔会卡字，不清楚字是怎么拆分的，所以反查也是很重要的。<br>一开始没有注意到rime可以设置反查，就又手撸了脚本来查询，效果也不错，而且支持整句，合并了上面的代码</p>
+<pre><code>#!/usr/bin/perl
+
+use feature qw(say);
+use warnings;
+use Encode;
+
+my $flypy_ori = &apos;/home/fio/.config/fcitx/rime/flypy.dict.yaml&apos;;
+
+my $arg = $ARGV[0] or &amp;usage;
+if ($arg eq &apos;update&apos;) {
+    ## 更新码表
+    my $flypy_new = $ARGV[1] || glob &apos;/tmp/飞扬码表*.txt&apos;;
+
+    rename $flypy_ori =&gt; $flypy_ori.&apos;.bak&apos;;
+    open ORI, &apos;&lt;&apos;, $flypy_new or die $@;
+    my $dict = [];
+    while (&lt;ORI&gt;) {
+        next if /#类/;
+        if (/^(.*?)#.*[^\d](\d+)/) {
+            push @$dict, [$1, $2];
+        }
+    }
+    close ORI;
+    my @fina = map { $_-&gt;[0] }
+        sort { $b-&gt;[1] &lt;=&gt; $a-&gt;[1] } @$dict;
+
+    my $fina = join &quot;\n&quot;, sort sort_by_code @fina;
+
+    $/ = &apos;&apos;;
+    my $prefix = &lt;DATA&gt;;
+    open OUTP, &apos;&gt;&apos;, $flypy_ori or die $@;
+    print OUTP $prefix;
+    print OUTP $fina;
+    close OUTP;
+
+    exec &quot;vim $flypy_ori&quot;;
+} else {
+    $key = decode(&apos;utf-8&apos;, $ARGV[0]);
+    my @keys = map { encode(&apos;utf-8&apos;, $_) } split(//, $key);
+    my $hah = [];
+    my $dicts = {};
+    for my $i (0..$#keys) {
+        my $max = $i+3 &gt; $#keys ? $#keys : $i+3;
+        for my $j ($i..$#keys) {
+            push @$hah, join(&apos;&apos;, @keys[$i..$j]);
+        }
+    }
+    my $sed_string = join(&apos;,&apos;, @$hah) =~ s/([^\d]+?)(,|$)/\/^$1\\t\/p\n/gr;
+    open SED, &quot;sed -ne \&quot;$sed_string\&quot; $flypy_ori | uniq |&quot;;
+    while (&lt;SED&gt;) {
+        /^(.*)\t(.*)$/;
+        push @{$dicts-&gt;{$1}}, $2;
+    }
+    close SED;
+    for (@$hah) {
+        if ($dicts-&gt;{$_}) {
+            print &quot;└&quot; if length($_) &gt; 3;
+            print &quot;$_\t\t\t&quot;, join(&apos;, &apos;, @{$dicts-&gt;{$_}}), &quot;\n&quot;;
+        }
+    }
+}
+
+sub sort_by_code {
+    my $codes = [];
+    for ($a, $b) {
+        /\t(\w+)$/;
+        push @$codes, $1;
+    }
+    $codes-&gt;[0] cmp $codes-&gt;[1];
+}
+
+sub usage {
+    print &quot;Usage:
+    flypy update [newdict_path]
+    flypy keyword\n&quot;;
+    exit 0;
+}
+
+__DATA__
+---
+name : flypy
+version :  &quot;1.1&quot;
+sort : original
+use_preset_vocabulary : false
+...
+</code></pre><p>这就是脚本最后的形态了，又能查字又能更新</p>
+<pre><code>flypy 我想知道这是为什么
+---output---
+我                      w, wop, wopd
+想                      xl, xlmx
+知                      viu, viuk
+└知道                   vd
+道                      dc, dcz, dczz
+这                      v, vezw, vwz, vwzw
+└这是为什么             vuwm
+是                      u, uior
+为                      ww, wwdd
+└为什么                 wsm, wume
+什                      ufr, ufru, uiru
+└什么                   sm, ufme
+么                      me, mep, meps, mop, mops
+</code></pre><p>最后，也是希望自己将能做到的麻烦事都转化成或多或少的脚本</p>
+</div></article><article><header><h2><a href="/blog/2016/01/15/恢复Archlinux的boot分区/">恢复Archlinux的boot分区</a></h2></header><div class="article-meta clearfix"><time class="left">2016-01-15</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li></ul></div><div class="markdown-body"><p>如果平时有备份boot分区的习惯，在发生什么意外的时候能够及时恢复，但由于arch的滚动升级，内核的更新往往很快，而碰巧备份文件里内核映象低于目前系统的版本，直接使用备份可能会出现问题。</p>
+<p>在boot分区已经损坏的情况下，不能进入系统，我们只能借助于liveCD的帮助。在电脑上做好一个arch的usb，我们将用它来启动系统。</p>
+<pre><code>$ lsblk 
+sda      8:0    0 931.5G  0 disk 
++-sda1   8:1    0   268M  0 part /boot
++-sda6   8:6    0    20G  0 part /
++-sda7   8:7    0    15G  0 part /var
++-sda8   8:8    0    25G  0 part /home
+
+mount /dev/sda6 /mnt
+mount /dev/sda1 /mnt/boot
+mount /dev/sda7 /mnt/var
+mount /dev/sda8 /mnt/home
+arch-chroot /mnt /bin/bash
+</code></pre><p>我们在live上面挂载好分区，然后chroot进去，之后就如同我们操作平时的电脑一样。现在只要恢复备份，然后创建当前系统内核的映象就行了。高端的可以自己生成，参考<a href="https://wiki.archlinux.org/index.php/Mkinitcpio" target="_blank" rel="noopener">ArchWiki mkinitcpio</a>，但我比较懒就一条命令解决了<code>sudo pacman -S linux</code>，会重新安装然后再自动生成。如果现在发现没有网络，可以<code>exit</code>，配置好网络再<code>chroot</code></p>
+</div></article><div class="archive-pagination"><div class="paginator"><a class="extend prev" rel="prev" href="/blog/archives/page/3/">&laquo;</a><a class="page-number" href="/blog/archives/">1</a><a class="page-number" href="/blog/archives/page/2/">2</a><a class="page-number" href="/blog/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/archives/page/5/">5</a><a class="extend next" rel="next" href="/blog/archives/page/5/">&raquo;</a></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

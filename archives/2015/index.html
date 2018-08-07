@@ -1,0 +1,427 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><article><header><h2><a href="/blog/2015/10/11/Hello-World/">Hello World!</a></h2></header><div class="article-meta clearfix"><time class="left">2015-10-11</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/life/">life</a></li></ul></div><div class="markdown-body"><p>荒颓了较长的一段时间，决定跟自己好好谈一下。并不是能改变自己的情绪或是一些看法，目下无尘的感觉不算太差，只是比较容易弄坏自己</p>
+<p>已经很长的一段，我的时间记录不准，自己也懒得去好好地校正，同时也有包括我的日记。上次满心是话地打开日记本，到笔尖上还是顿生厌恶感，草草写了三两行。而且还有混乱的作息，最近习惯起了睡在傍晚，大概3点左右，然后67点再爬起来，晚上又是1点后睡，却迟迟睡不着。呵，我早就发现自己已经是别人眼里的奇葩了</p>
+<p>其实改变不改变对现在的自己意义也不大，是觉得放到以后会被埋怨，这段日子肯定会有一天会结束，或不小心被终结。</p>
+<p>日记真的是关键，若能好好写的话也许会有很大的改善。所以封存了旧的日记本，换成一本全白的本子，不想受线条控制的，随心所欲地记录好生活</p>
+<p>利索起来</p>
+<p>print “Hello World\n”;</p>
+</div></article><article><header><h2><a href="/blog/2015/09/18/在archlinux下搭建lnmp环境/">在archlinux下搭建lnmp环境</a></h2></header><div class="article-meta clearfix"><time class="left">2015-09-18</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/archlinux/">archlinux</a></li><li><a href="/blog/tags/webserver/">webserver</a></li></ul></div><div class="markdown-body"><p>本文主要根据<a href="http://zyan.cc" target="_blank" rel="noopener">张宴的BLOG</a>，我在centos虚拟机搭建成功后，想想也在archlinux练练，把搭建的笔记整理了一下。</p>
+<p>这里lnmp是linux+nginx+mariadb+PHP，目前截止使用的软件都是最新的，archlinux也是保持滚动到最新</p>
+<p>1.从源里直接安装一些软件</p>
+<pre><code>$ sudo -s
+# pacman -S --noconfirm gcc autoconf libjpeg libpng freetype libxml2 zlib glibc glib2 bzip2 ncurses curl e2fsprogs krb5 libidn openssl pcre mhash openldap nss_ldap libmcrypt mariadb
+</code></pre><p>这里<code>mariadb</code>数据库直接用源里的了</p>
+<pre><code># mkdir -p /data0/soft
+# cd /data0/soft
+# wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+# wget http://nginx.org/download/nginx-1.8.0.tar.gz
+# wget &quot;http://downloads.sourceforge.net/mcrypt/mcrypt-2.6.8.tar.gz?modtime=1194463373&amp;big_mirror=0&quot;
+# wget http://cn2.php.net/get/php-5.6.13.tar.gz/from/this/mirror
+# wget http://pecl.php.net/get/memcache-2.2.7.tgz
+</code></pre><p>2.接下来就开始编译PHP的支持库</p>
+<pre><code># tar zxvf libiconv[TAB]
+# cd libiconv[TAB]
+# ./configure --prefix=/usr/local
+# make
+# make install
+# cd ..
+
+# tar zxvf mcrypt[TAB]
+# cd mcrypt[TAB]
+# /sbin/ldconfig
+# ./configure
+# make
+# make install
+# cd ..
+</code></pre><p><code>mcrypt</code>的编译有问题的，看下<code>/usr/lib/</code>中有没有libmhash和libmcrypt的库文件。</p>
+<p>3.配置mariadb</p>
+<p>创建mariadb的用户和数据库目录</p>
+<pre><code># groupadd mysql
+# useradd -g mysql mysql
+# mkdir -p /data0/data/mysql
+# mkdir -p /data0/logs/mysql
+# mkdir /data0/etc
+</code></pre><p>创建数据表和配置文件</p>
+<pre><code># mysql_install_db --user=mysql --basedir=/usr --datadir=/data0/data/mysql
+# vim /data0/etc/my.cnf
+</code></pre><p>my.cnf配置文件</p>
+<pre><code>[client]
+character-set-server=utf8
+port=3306
+socket=/run/mysqld/mysqld.sock
+
+[mysqld]
+character-set-server=utf8
+user=mysql
+port=3306
+socket=/run/mysqld/mysqld.sock
+basedir=/usr
+datadir=/data0/data/mysql
+log-error=/data0/logs/mysql/err.log
+pid-file=/data0/data/mysql/mysql.pid
+open_files_limit=8192
+back_log=600
+max_connections=5000
+max_connect_errors=6000
+table-cache=4096
+external-locking=FALSE
+max_allowed_packet=32M
+sort_buffer_size=1M
+join_buffer_size=1M
+thread_cache_size=256
+#thread_concurrency=8
+query_cache_size=512M
+query_cache_limit=2M
+query_cache_min_res_unit=2K
+default_storage_engine=MyISAM
+thread_stack=192k
+transaction_isolation=READ-COMMITTED
+tmp_table_size=246M
+max_heap_table_size=246M
+long_query_time=3
+log_slave_updates
+log-bin=/data0/logs/mysql/binlog
+binlog_cache_size=4M
+binlog_format=MIXED
+#log
+#log_warngins
+max_binlog_size=1G
+relay-log-index=/data0/logs/mysql/relaylog
+relay-log-info-file=/data0/logs/mysql/relaylog
+relay-log=/data0/log/mysqlrelaylog
+expire_logs_days=30
+key_buffer_size=256M
+read_buffer_size=1M
+read_rnd_buffer_size=16M
+bulk_insert_buffer_size=64M
+myisam_sort_buffer_size=128M
+myisam_max_sort_file_size=10G
+myisam_repair_threads=1
+myisam_recover
+
+interactive_timeout=120
+wait_timeout=120
+
+skip-name-resolve
+#master-connect-retry=10
+slave-skip-errors=1032,1062,126,1114,1146,1048,1396
+
+#master-host=192.168.1.2
+#master-user=username
+#master-password=password
+#master-port=3306
+
+server-id=1
+
+innodb_additional_mem_pool_size=16M
+innodb_buffer_pool_size=512M
+innodb_data_file_path=ibdata1:512M:autoextend
+innodb_file_io_threads=4
+innodb_thread_concurrency=8
+innodb_flush_log_at_trx_commit=2
+innodb_log_buffer_size=16M
+innodb_log_file_size=128M
+innodb_log_files_in_group=3
+innodb_max_dirty_pages_pct=90
+innodb_lock_wait_timeout=120
+innodb_file_per_table=0
+
+#log-slow-queries=/data0/logs/mysql/slow.log
+#long_query_time=10
+
+[mysqldump]
+quick
+max_allowed_packet=32M
+</code></pre><p>创建管理mariadb数据库的shell脚本</p>
+<pre><code># mkdir -p /data0/bin
+# vim /data0/bin/mysql
+
+#!/bin/sh
+mysql_username=&quot;admin&quot;
+mysql_password=&quot;nimda&quot;          //账号等下再添加
+mysql_port=3306
+
+function_start_mysql()
+{
+    printf &quot;Starting MySQL...&quot;
+    /bin/sh /usr/bin/mysqld_safe --defaults-file=/data0/etc/my.cnf 2&gt;&amp;1 &gt;/dev/null &amp;
+    printf &quot;Done!\n&quot;
+}
+
+function_stop_mysql()
+{
+    printf &quot;Stoping MySQL...&quot;
+    /usr/bin/mysqladmin -u ${mysql_username} -p${mysql_password} -S /run/mysqld/mysqld.sock shutdown
+    printf &quot;Done!\n&quot;
+}
+
+function_restart_mysql()
+{
+    printf &quot;Restarting MySQL...&quot;
+    function_stop_mysql
+    sleep 5
+    function_start_mysql
+    printf &quot;Done!\n&quot;
+}
+
+function_kill_mysql()
+{
+    printf &quot;Killing MySQL...&quot;
+    kill -9 $(ps -ef | grep &apos;bin/mysqld&apos; | grep ${mysql_port} | awk &apos;{printf $3 &quot; &quot; $2}&apos;)
+    printf &quot;Done!\n&quot;
+}
+
+if [ &quot;$1&quot; = &quot;start&quot; ]; then
+    function_start_mysql
+elif [ &quot;$1&quot; = &quot;stop&quot; ]; then
+    function_stop_mysql
+elif [ &quot;$1&quot; = &quot;restart&quot; ]; then
+    function_start_mysql
+elif [ &quot;$1&quot; = &quot;kill&quot; ]; then
+    function_kill_mysql
+else
+    printf &quot; Usage: /data0/bin/mysql {start|stop|restart|kill}\n&quot;
+fi
+</code></pre><p>设置好权限</p>
+<pre><code># chmod +x /data0/bin/mysql
+# chown -R mysql:mysql /data0/data/mysql
+</code></pre><p>启动，确认没什么错误</p>
+<pre><code># /data0/bin/mysql start
+# cat /data0/logs/mysql/err.log
+</code></pre><p>连接数据库，提示password直接回车</p>
+<pre><code># mysql -u root -p
+</code></pre><p>输入SQL语句，创建刚才脚本中设置的admin用户</p>
+<pre><code>&gt; GRANT ALL PRIVILEGES ON *.* TO &apos;admin&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;nimda&apos;;
+&gt; GRANT ALL PRIVILEGES ON *.* TO &apos;admin&apos;@&apos;127.0.0.1&apos; IDENTIFIED BY &apos;nimda&apos;;
+</code></pre><p>停止MySQL</p>
+<pre><code># /data0/bin/mysql stop         //没有错误说明用户设置成功了
+</code></pre><p>4.编译安装PHP</p>
+<pre><code># tar zxvf php[TAB]
+# cd php[TAB]
+# ./configure 
+    --prefix=/usr --with-config-file-path=/data0/etc 
+    --with-mysql=/usr --with-mysqli=/usr/bin/mysql_config 
+    --with-iconv-dir=/usr/local --with-freetype-dir 
+    --with-jpeg-dir --with-png-dir 
+    --with-zlib --with-libxml-dir=/usr 
+    --enable-xml --disable-rpath 
+    --enable-bcmath --enable-shmop 
+    --enable-sysvsem --enable-inline-optimization 
+    --with-curl --enable-mbregex 
+    --enable-fpm --enable-mbstring 
+    --with-mcrypt --with-gd --enable-gd-native-ttf 
+    --with-openssl --with-mhash 
+    --enable-pcntl --enable-sockets 
+    --with-ldap --with-ldap-sasl 
+    --with-xmlrpc --enable-zip 
+    --enable-soap --enable-opcache 
+    --with-pdo-mysql --enable-maintainer-zts
+# make ZEND_EXTRA_LIBS=&apos;-liconv&apos;
+# make install
+# cp php.ini-development /data0/etc/php.ini
+# cd ..
+</code></pre><p>编译memcache扩展模块</p>
+<pre><code># tar zxvf memcache[TAB]
+# cd memcache[TAB]
+# /usr/bin/phpize
+# ./configure   //我这里可以直接发现php-config，其他路径需加上--with-php-config=/path/to/php-config
+# make
+# make install
+</code></pre><p>修改php.ini文件</p>
+<p>查找/data0/etc/php.ini中的extension_dir=”./“，修改为</p>
+<pre><code>extension_dir=&quot;/usr/lib/php/extensions/no-debug-zts-20131226/&quot;
+</code></pre><p>再其后一行添加</p>
+<pre><code>extension=&quot;memcache.so&quot;
+</code></pre><p>PHP现在已经不用eaccelerator来加速，而是使用内置的opcache，这里在php.ini中搜索opcache，直接修改相应的配置就行，这里我设置成这样</p>
+<pre><code>[opcache]
+
+zend_extension=&quot;/usr/lib/php/extensions/no-debug-zts-20131226/opcache.so&quot;
+
+; Determines if Zend OPCache is enabled
+opcache.enable=1
+
+; Determines if Zend OPCache is enabled for the CLI version of PHP
+opcache.enable_cli=1
+
+; The OPcache shared memory storage size.
+opcache.memory_consumption=128
+
+; The amount of memory for interned strings in Mbytes.
+opcache.interned_strings_buffer=8
+
+; The maximum number of keys (scripts) in the OPcache hash table.
+; Only numbers between 200 and 100000 are allowed.
+opcache.max_accelerated_files=4000
+
+; How often (in seconds) to check file timestamps for changes to the shared
+; memory storage allocation. (&quot;1&quot; means validate once per second, but only
+; once per request. &quot;0&quot; means always validate)
+opcache.revalidate_freq=60
+
+; If enabled, a fast shutdown sequence is used for the accelerated code
+opcache.fast_shutdown=1
+</code></pre><p>创建www用户和组</p>
+<pre><code># mkdir /data0/www
+# groupadd www
+# useradd -g www www
+# chown -R www:www /data0/www
+</code></pre><p>配置php-fpm.conf文件（可以平滑变更php.ini而不用重启cgi)，参照了张宴的设置</p>
+<pre><code># vim /usr/etc/php-fpm.conf
+
+[global]
+pid = /data0/logs/php-fpm/php-fpm.pid
+error_log = /data0/logs/php-fpm/err.log
+log_level = notice
+emergency_restart_threshold = 10
+emergency_restart_interval = 1m
+process_control_timeout = 5s
+daemonize = yes
+
+[www]
+user = www
+group = www
+listen = 127.0.0.1:9000
+listen.backlog = 65535
+listen.mode = 0660
+listen.allowed_clients = 127.0.0.1
+pm = dynamic
+pm.max_children = 128
+pm.start_servers = 20
+pm.min_spare_servers = 5
+pm.max_spare_servers = 35
+pm.max_requests = 1024
+slowlog = log/$pool.log.slow
+request_slowlog_timeout = 0s
+request_terminate_timeout = 0
+rlimit_files = 65535
+rlimit_core = 0
+catch_workers_output = yes
+env[HOSTNAME] = $HOSTNAME
+env[PATH] = /usr/local/bin:/usr/bin:/bin
+env[TMP] = /tmp
+env[TMPDIR] = /tmp
+env[TEMP] = /tmp
+</code></pre><p>尝试启动php-fpm</p>
+<pre><code># ulimit -SHn 65535
+# php-fpm
+</code></pre><p>5.安装Nginx</p>
+<pre><code># mkdir /data0/etc/nginx
+# mkdir /data0/logs/nginx
+# mkdir -p /data0/tmp/nginx
+# tar zxvf nginx[TAB]
+# cd nginx[TAB]
+# ./configure 
+    --prefix=/usr --conf-path=/data0/etc/nginx/nginx.conf 
+    --error-log-path=/data0/logs/nginx/err.log --http-log-path=/data0/logs/nginx/access.log 
+    --pid-path=/data0/logs/nginx/nginx.pid --lock-path=/tmp/nginx.lock 
+    --user=www --group=www 
+    --with-ipv6 --with-http_ssl_module 
+    --with-http_spdy_module --with-http_gzip_static_module 
+    --with-http_stub_status_module --http-client-body-temp-path=/data0/tmp/nginx/client_body 
+    --http-proxy-temp-path=/data0/tmp/nginx/proxy --http-fastcgi-temp-path=/data0/tmp/nginx/fastcgi 
+    --http-uwsgi-temp-path=/data0/tmp/nginx/uwsgi --http-scgi-temp-path=/data0/tmp/nginx/scgi
+# make &amp; make install
+# cd ..
+</code></pre><p>加了一些没用到的参数，但我相信以后可以用到</p>
+<p>如果nginx已经安装了，就不要make install，执行下面语句升级，配置文件也不会丢失</p>
+<pre><code># rm -rf /usr/sbin/nginx
+# cp objs/nginx /usr/sbin/nginx
+# make upgrade
+</code></pre><p>配置目录权限</p>
+<pre><code># chmod +w /data0/logs/nginx
+# chown -R www:www /data0/logs/nginx
+# chown -R www:www /data0/tmp/nginx
+</code></pre><p>修改配置文件nginx.conf</p>
+<pre><code># vim /data0/etc/nginx/nginx.conf
+
+user    www www;
+worker_processes  8;
+
+error_log   /data0/logs/nginx/err.log   crit;
+worker_rlimit_nofile    65535;
+
+events {
+    use     epoll;
+    worker_connections  65535;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+    access_log /data0/logs/nginx/access.log  main;
+
+    server_names_hash_bucket_size    128;
+    client_header_buffer_size   32k;
+    large_client_header_buffers     4 32k;
+    client_max_body_size    8m;
+
+    sendfile        on;
+    tcp_nopush     on;
+
+    keepalive_timeout  60;
+
+    tcp_nodelay on;
+
+    fastcgi_connect_timeout 300;
+    fastcgi_send_timeout    300;
+    fastcgi_read_timeout    300;
+    fastcgi_buffer_size     64k;
+    fastcgi_buffers     4   64k;
+    fastcgi_busy_buffers_size   128k;
+    fastcgi_temp_file_write_size    128k;
+
+    gzip  on;
+    gzip_min_length     1k;
+    gzip_buffers    4   16k;
+    gzip_http_version   1.0;
+    gzip_comp_level     2;
+    gzip_types      text/plain application/x-javascript text/css application/xml;
+    gzip_vary       on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+        index index.html index.htm index.php;
+        root /data0/www;
+
+        #error_page  404              /404.html;
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ .*\.(php|php5)?$ {
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+            expires 30d;
+        }
+
+        location ~ .*\.(js|css)?$ {
+            expires 1h;
+        }
+
+        location /status/ {
+            stub_status on;
+            access_log  off;
+        }
+    }
+}
+</code></pre><p>最后启动nginx</p>
+<pre><code># ulimit -SHn 65535
+# nginx
+</code></pre></div></article><div class="archive-pagination"><div class="paginator"><span class="page-number current">1</span></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

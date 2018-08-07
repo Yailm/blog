@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>标签：logic | Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><div class="archive-title"><strong>标签 #logic</strong></div><article><header><h2><a href="/blog/2017/08/15/2n-1真假话问题二/">2n+1真假话问题二</a></h2></header><div class="article-meta clearfix"><time class="left">2017-08-15</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/logic/">logic</a></li></ul></div><div class="markdown-body"><p>接着上次话题，这次将会有更好解决方案</p>
+<h4 id="尝试发现规律"><a href="#尝试发现规律" class="headerlink" title="尝试发现规律"></a>尝试发现规律</h4><p>反正问题到现在也就一句话：<strong>如何快速找到任意一个A类人</strong>，或者说，如何快速地缩小范围？</p>
+<p>当成算法优化问题考虑，你应该从2这个数字去入手，二分法二叉树已经在这方面给过提示。那为什么不考虑3/4/5之类的呢？拿分类来讲，分3类需要询问2次，只排除了2/3。每次排除1/n也就n=2时最大，效率也最高</p>
+<p>综上，有了思考的方向，来一起看看结果：</p>
+<p>下面是两个未知类别相互之间的判断</p>
+<p><img src="/blog/images/20170815-1.png" alt="真假话问题"></p>
+<p>可以发现，在图上红色框中两种情况，两个人之间的判断都是“对方是A类人”，而他们也都是同样类别的。这不是瞎掰的，因为如果一个A类人和B类人，A类人说真话，就不会有这样情况</p>
+<blockquote>
+<p>结论：如果两个人相互判断对方是A类人，那他们为同一类别</p>
+</blockquote>
+<h4 id="利用规律"><a href="#利用规律" class="headerlink" title="利用规律"></a>利用规律</h4><p>那该怎样利用这一结论呢？简单来说，如果两个人是同样类别的，我们随意去掉其中一人，这将使需要确定或是还未被确定类别的大大减少</p>
+<p>不对，应该在把后面这个加上才算是“大大减少”：</p>
+<blockquote>
+<p>两个人中任意一个给出“他是B”的结论，那对不起，两个人都扔掉</p>
+</blockquote>
+<p>可以结合上图，或自己考虑下。只要说出“他是B”，那两个人的类别只有两种情况：两个B类人；一个A类一个B类人<br>都不要了呗，反正A类比B类人多，买卖亏不成</p>
+<h4 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h4><p>这样下来方法可能就很多了，这里我给出我的方案：</p>
+<ul>
+<li>2N+1个人，取一个人e出来（两种情况：e是B类人，那A类人至少比B类人多2个；e是A类人，那A类大于等于B类的人数）</li>
+<li>剩下的2N个人，两两一组共形成N组，相互给出对方的评价</li>
+<li>对于相互都给出“对方是A”结论的组，每个组中都挑出一个人来，剩余的人都可以丢<br>PS. 这里提一下，现在剩余的人依然是A类人大于等于B类人，（两个A类人组必然能留下一个A类人，但两个B类人组却不一定，且A类人几乎比B类人多）</li>
+<li><p>然后判断一下剩余人数的奇偶性</p>
+<ul>
+<li>奇数，e就可以丢了（我们无法定义他的身份），我们再拉一个人上台成为新的e，剩余人也刚好为偶数</li>
+<li>偶数，不作为</li>
+</ul>
+</li>
+<li><p>重复刚才的操作</p>
+</li>
+</ul>
+<p>可以直接看最后，如果最后没有人从小组中出来，那台上的e一定是A类人<br>或是最后只剩下一个人，那他只能是A类人</p>
+<p>这个方法相比于前一个方法n^2，它只需要<strong>nlogn</strong>的询问次数，而且在概率上，出现较坏情况的可能性也降低了许多（毕竟两个B类的组也不是总能伪装成功），每过一个流程，范围都在迅速缩小</p>
+<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>这个问题在网上讨论挺少的，给出的也多是第一种方案。其实这文章应该写得带数据图那样的，我没有深入了解题目内在固定关联（比如，题目中给出的每个人自我判断是不是多余的）期望以后能看到这题完整详尽的解答，最好能得出和我一样的结论</p>
+</div></article><article><header><h2><a href="/blog/2017/08/14/2n-1真假话问题一/">2n+1真假话问题（一）</a></h2></header><div class="article-meta clearfix"><time class="left">2017-08-14</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/logic/">logic</a></li></ul></div><div class="markdown-body"><p>最近什么都没得到挺郁闷的，不会是我没更新这里吧</p>
+<p>这是上次同学找导师留的题目，那时抽空让我帮他看看</p>
+<h4 id="题目是这样"><a href="#题目是这样" class="headerlink" title="题目是这样:"></a>题目是这样:</h4><blockquote>
+<p>有2n+1个人，其中有部分人只说真话为A类人，有部分人可能说真话可能说假话为B类人。（这个定义了就不会说成绕口令）<br>已知A类人至少有n+1个而B类人至多有n个<br>你只能问这样的问题：询问a：“b是不是说真话的人？“。a，b可以是同一个人，即问一个人，他自己是不是只说真话的人<br>请设计一个算法，用尽量少的询问次数使你确认所有人是哪类人？</p>
+</blockquote>
+<p>大部分人看到这个题目，都能在10分钟理清思路：</p>
+<blockquote>
+<p>那就是找到一个A类人（说真话），让他确认其他剩余的人</p>
+</blockquote>
+<p>怎么找到这样一个人呢？所有2n+1个人里面，A类人占了一半以上，这有点像表决，他们始终能主导结果</p>
+<p>那就设立个台子，我们每次拎一个人上来，<strong>剩余</strong>的人来对他进行确认</p>
+<p>结果只有三种情况：</p>
+<ol>
+<li>平票，结论是底下A B两类人都为n个，那台上的人为A类人（因为A类人至少有n+1个）</li>
+<li>A比B多，那台上的人就是A类人</li>
+<li>B比A多，台上是B类人</li>
+</ol>
+<p>对于前两种情况，很好，我们找到了一个说真话的人，接下来只要让他发言问题就行了<br>但如果不幸第3种，就必须重新刚才的操作，直到发现一个A类人或所有B类人</p>
+<h4 id="考虑下最坏的情况："><a href="#考虑下最坏的情况：" class="headerlink" title="考虑下最坏的情况："></a>考虑下最坏的情况：</h4><ul>
+<li>所有的B类人都隐藏自己，全部说真话</li>
+<li>我们拎出来也恰好都是B类人（除了最后一个，下面提）</li>
+<li>还有，n个B类人，n+1个A类人</li>
+</ul>
+<p>虽然是最坏情况，但必须基于合理且不多余的询问：应该加上提前中断机制：如果有一半及以上的人给出对台上人的相同判断，结果就已然确定</p>
+<p>同时不提倡B类人去说假话，不合群的判断会导致直接从团队中剔除，而他自己对询问次数的贡献仅仅为1（他干扰了前面的中断机制，使得其多询问一人）</p>
+<p>再考虑一下最后关头，n+2个人，里面有个B类人（瑟瑟发抖），我们也应该拎出来个A类人，让他判断剩余的人，这样才是最坏的情况</p>
+<h4 id="总结一下："><a href="#总结一下：" class="headerlink" title="总结一下："></a>总结一下：</h4><p>第一次，B类人被拎上去，台下总共2n个人，前n个都说台上人是B类的，那就直接扔了他（询问次数+n）<br>第二次，另一个B类人被拎上去，台下2n-1（询问次数+n）<br>…</p>
+<p>询问总次数：</p>
+<ul>
+<li>(n为偶数）n+n+(n-1)+(n-1)+…+(n/2+2)+(n/2+2)+(n/2+1)+[(n/2+1)+n] = 0.75n2+1.5n</li>
+<li>(n为奇数）n+n+(n-1)+(n-1)+…+((n+3)/2)+((n+3)/2)+[((n+1)/2)+n] = 0.75n2+1.5n-0.25</li>
+</ul>
+<p>这是普通的方法，下篇用优化过的方法</p>
+</div></article><div class="archive-pagination"><div class="paginator"><span class="page-number current">1</span></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><article><header><h2><a href="/blog/2016/05/08/python将list转换成可变参数/">python将list转换成可变参数</a></h2></header><div class="article-meta clearfix"><time class="left">2016-05-08</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/python/">python</a></li></ul></div><div class="markdown-body"><p>这是刚刚学会的新技能，比如asyncio模块中的如下一种方法</p>
+<pre><code>import asyncio
+asyncio.subprocess.create_subprocess_exec(program, *args, 
+    stdin=None, stdout=None, stderr=None, loop=None, limit=65536, **kwds)
+</code></pre><p>这里的program和args是分开的，如果你有一串命令要执行，比如<code>ls -al /tmp</code>。</p>
+<p>这里我们要同时将命令分解成ls和它的参数，而且我们若在函数中放入列表就会产生错误，通过计算参数的个数再传入函数也是不合理</p>
+<p>然而今天才学到，python可以这样写<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">command = <span class="string">'ls -al /tmp'</span></span><br><span class="line">command_list = command.split()</span><br><span class="line">asyncio.subprocess.create_subprocess_exec(*command_list)</span><br></pre></td></tr></table></figure></p>
+<p>不仅列表可以，同样也能适用于字典</p>
+<pre><code>def test(**kw):
+    print(kw)
+
+a = {&apos;a&apos;:1, &apos;c&apos;:2}
+test(**a)
+</code></pre></div></article><article><header><h2><a href="/blog/2016/04/24/谈谈现在自己的错误/">谈谈现在自己的错误</a></h2></header><div class="article-meta clearfix"><time class="left">2016-04-24</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/program/">program</a></li></ul></div><div class="markdown-body"><p>昨天我们实验室开了一次例会，对我有非常大的打击。大概是这样的，同室里的一个伙伴，以前和我一起接触linux，当初我的底子比他要好，所有起点也不大同。我早早用上了arch，一直使用的终端命令，而那时他还只是用鼠标点来点去。可是现在，我只能说他用得比我好太多了，然而为什么会变成这样呢？我想我大概自己要改进的部分原因</p>
+<p>说起来其实也很好笑，一个说自己会vim的人，就一直对着代码 jjjjjjjjjjjjjjjjjjjjjjjjjjkkkkkkkkkkkkkkkkkkggG ，的确很好笑。所说的使用命令行， ls 对着结果找了好久。相当高级的命令却不怎么见到，唉，现在才发现了问题</p>
+<ul>
+<li><p>要做事的时候想清楚</p>
+<p>的确我能不假思索的使用jjjjjjkkkkk，但是并不，唉那个怎么说。现在就是希望能清楚自己要的是什么，然后多花点脑子。<br>自己打字的时候就好像不用脑子的，总是去试探一个按键，按错就马上改，这是不行的</p>
+</li>
+<li><p>不要安于现状</p>
+<p>遇到什么事情，不要只是用简单的方法解决了就行，这样是学不到东西的。要学会利用新的工具，查看其manual文档</p>
+</li>
+<li><p>了解问题要全面</p>
+<p>就好像例会上曾翔钰给我们讲的string和stringbuffer一样，其实她自己也不是非常清楚。也像我前面的博客，一知半解，却放了上来</p>
+</li>
+</ul>
+<hr>
+<p>总结完了，我想了想自己的任务，为了不至于成为鄙陋的人</p>
+<ul>
+<li>每天一条linux的命令学习</li>
+<li>vimdoc</li>
+<li>做事可以慢一点，想清楚点</li>
+</ul>
+</div></article><article><header><h2><a href="/blog/2016/04/18/u-undo-line-numbers-wrong/">u_undo: line numbers wrong</a></h2></header><div class="article-meta clearfix"><time class="left">2016-04-18</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/vim/">vim</a></li></ul></div><div class="markdown-body"><p>在一次强制关机后，开机准备继续写wiki，然后竟然发现perl.md只剩下117行，突然感觉自己的汗毛都倒立了。尝试按了下u，vim底下给出错误消息<code>u_undo: line numbers wrong</code>，应该某次历史出现了错误不能恢复。虽然用了git做版本控制，上次commit已经是刚创建这个wiki的时候了，帮不到我，提交的时候还是要勤奋点好。</p>
+<p>这下让我有点慌了，记得自己在.vimrc中有设置undofile</p>
+<pre><code>try
+    set undodir=~/.vim/undodir
+    set undofile
+catch
+</code></pre><p>我马上切换到~/.vim/undodir下，看到个1.7m大小的undo文件，心里放松了许多，顺手备份下来。接下来尝试创建新的文件来恢复备份也失败了，想想也是，怎么可能做得到</p>
+<p>在网上逛了逛，发现stackoverflow上有<a href="http://stackoverflow.com/questions/21385956/undo-recovery-from-swap-file-in-vim" target="_blank" rel="noopener">类似的提问</a></p>
+<p><code>:undolist</code>命令的确能看到历史，回答中提到的插件，我尝试了Gundo。在Vundle加入以下代码，然后安装插件</p>
+<pre><code>Bundle &apos;sjl/gundo.vim&apos;
+</code></pre><p><code>:GundoToggle</code>，打开预览历史视图，直接跳过错误找到了中午的记录，完成恢复，顺便commit了</p>
+</div></article><div class="archive-pagination"><div class="paginator"><a class="extend prev" rel="prev" href="/blog/page/2/">&laquo;</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="page-number" href="/blog/page/5/">5</a><a class="extend next" rel="next" href="/blog/page/4/">&raquo;</a></div></div></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>

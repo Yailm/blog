@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="alternate" type="application/rss+xml" title="Uyiim" href="/blog/atom.xml"><link rel="stylesheet" href="/blog/styles.css"><title>opencv中摄像头图像的“实时”获取 | Uyiim</title></head><body><div class="container"><div class="columns page-header"><h1>Uyiim</h1></div><div class="columns"><div class="navigation"><nav class="menus-main"><a href="/" class="favicon"><img alt="Uyiim" src="/blog/favicon.png"></a><a href="/blog/">Home</a><a href="https://github.com/Yailm/wiki">Wiki</a></nav><nav class="right menus-right"><a href="https://github.com/Yailm">Github</a><a href="/blog/atom.xml">RSS</a></nav></div></div><div class="columns"><div class="block-body column three-fourths"><div class="archive-title"><p>努力成长，终点远着</p>
+</div><article><header><small class="right"><a target="_blank" href="null_posts%2F2016-08-30%23opencv%E4%B8%AD%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E7%9A%84%E2%80%9C%E5%AE%9E%E6%97%B6%E2%80%9D%E8%8E%B7%E5%8F%96.md">查看源代码</a></small><h2>opencv中摄像头图像的“实时”获取</h2></header><div class="article-meta clearfix"><time class="left">2016-08-30</time><ul class="tags left"></ul><ul class="tags right"><li><a href="/blog/tags/opencv-python/">opencv python</a></li></ul></div><div class="markdown-body"><p>这段时间要做项目学习了下opencv，准备通过摄像头来捕捉人体。心里有个疑问，对于从摄像头获取的图像，如果对图像的分析处理时间很长，那么下一次再从摄像头获取的图像是什么时候的呢？有两个选项，一个是紧临上一次的图像，或者是处理结束后即时获取的图像。正好准备解决这个问题，写了代码来验证一下</p>
+<pre><code>import cv2
+import time
+
+cap = cv2.VideoCapture(0)
+for i in range(15):
+    ret, image = cap.read()
+    cv2.imwrite(&apos;/tmp/image%02d.jpg&apos; % i, image)
+    print(&quot;get&quot;, i+1)
+    time.sleep(3)   # 代替耗时的操作
+cap.release()
+</code></pre><p>那，这个程序怎么验证呢？用手机开个秒表，计时并放在摄像头前面，之后所有的图片得到这样的结果</p>
+<p>01.78s（手机移动到摄像头花了点时间）<br>01.81s<br>01.85s<br>01.87s<br>01.92s<br>04.83s<br>07.84s<br>….大概后面都能以约3秒的间隔<br>最后是31.95s，而我一结束就马上关闭了秒表，停留在48.35s</p>
+<p>出现这样的结果，能马上想到获取的图像其实是有缓冲区的，大小为5张图片的样子，而其后能保持间隔，不正是生产者消费者的问题吗？</p>
+<p>假设摄像头以每秒30帧获取图像的话，那么程序就是每3秒才取走一张图片，进而促使摄像头继续获取图像。不难解释后面31.95和45.35s<br>此时应该是31.95的图片在缓冲区的底端，类似这样</p>
+<p>44.10<br>41.05<br>38.01<br>34.98<br>31.95</p>
+<p>当31.95被取出的时候，(44.10+3s)才进入缓冲区，这才是当时真正的时间</p>
+<p>所以，当我们调用摄像头并对图像使用耗时的操作时，是没有做到实时的。可以事先计算图像操作的耗时（一般都会比读取的时间多），只要知道它大于读取耗费的时间，那么我们就能知道这样一个结论：<code>当我们获取的图像的时候，缓冲区都是满的</code>，而且是以前的图像，真正想要的在缓冲区外面，所以只要读取并舍弃这些图像</p>
+<pre><code>for x in range(5): cap.read()
+</code></pre><p>这样，摄像头就能称得上是实时的了</p>
+</div></article></div><div class="block-sidebar column one-fourth"><div class="widget text-content"><p>暂无内容</p>
+</div><div class="widget tags"><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/archlinux/">archlinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/life/">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/logic/">logic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/opencv-python/">opencv python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/program/">program</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webserver/">webserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/wiki/">wiki</a></li></ul></div><div class="widget archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul></div></div></div></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63884172-1', 'auto');
+ga('send', 'pageview');
+</script></body></html>
